@@ -21,5 +21,6 @@ from app_eccofinancas import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('cadastro/', views.cadastro, name='cadastro'),
+    path('login/', views.conectar, name='conectar'),
     path('', views.home, name='home'),
 ]
