@@ -1,0 +1,121 @@
+/* geral */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Helvetica;
+    color: #323232;
+    border: none;
+}
+
+body {
+    background-color: #1e192c;
+    background-size: cover;
+
+}
+
+body {
+    background-image: url(../img/cf.jpg);
+}
+
+h1 {
+    font-variant:small-caps;
+    color: #FFF;
+}
+
+
+textarea:focus, input:focus {
+    outline: none;
+}
+
+p {
+    color: #Fff;
+}
+
+a {
+    color: #FFF;
+    font-size: .8rem;
+}
+
+#forgot-pass:hover {
+    color: #c6a0ff;
+}
+
+a:hover {
+    color: #c6a0ff;
+}
+
+#login-container {
+    background-color: #131215;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px 30px;
+    margin-top: 10vh;
+    border-radius: 10px;
+    text-align: center;
+}
+
+form {
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+label, input {
+    display: block;
+    width: 100%;
+    text-align: left;
+}
+
+label {
+    font-weight: bold;
+    color: #fff;
+}
+
+input {
+    border-bottom: 2px solid #323232;
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+input:focus {
+    border-bottom: 2px solid #2219cf;
+}
+
+#forgot-pass {
+    
+    color: #fff;
+    text-align: right;
+    display: block;
+}
+
+input[type="submit"] {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    border: none;
+    height: 40px;
+    border-radius: 20px;
+    margin-top: 30px;
+    color: #FFF;
+    background-color: #5b1481;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #7F28B5;
+    transition: .5s;
+}
+
+.error-validation {
+    color: #ff1a1a;
+    position: absolute;
+    top: 57px;
+    font-size: 0.8rem;
+}
+
+#register-container p {
+    margin-bottom: 10px;
+}

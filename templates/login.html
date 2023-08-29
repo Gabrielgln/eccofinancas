@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/Login.css' %}">
+    <title>Login</title>
+</head>
+<body>
+    <div id="login-container">
+        <h1>ECCOFINANÇAS</h1>
+        <form action="{% url 'conectar' %}"  method="post">
+            {% csrf_token %}
+            <label for="email">E-mail</label>
+            <input type="text" name="email" id="enail" placeholder="Digite seu e-mail" autocomplete="off">
+            <label for="password">Senha</label>
+            <input type="password" name="password" id="password" placeholder="Digite a sua senha">
+            <a href="#" id="forgot-pass">Esqueceu a senha?</a>
+            <input type="submit" value="Entrar">
+        </form>
+        <div id="register-container">
+            <p>Ainda não tem uma conta?</p>
+            <a href="{% url 'cadastro' %}">Cadastre-se</a>
+        </div>
+        {% for message in messages %}
+        <div align="center">
+            <strong class="error-validation">Erro! </strong>{{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    <script src="{% static 'js/Login.js' %}"></script>
+</body>
+</html>
