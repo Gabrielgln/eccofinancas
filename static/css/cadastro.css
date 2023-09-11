@@ -141,6 +141,14 @@ input[type="submit"]:hover {
     font-size: 0.8rem;
 }
 
+.error-validation-email {
+    color: #ff1a1a;
+    position: absolute;
+    font-size: 0.8rem;
+    padding: auto;
+    margin-top: 245px;
+}
+
 .error-validationTwo {
     color: #ff1a1a;
     position: absolute;
