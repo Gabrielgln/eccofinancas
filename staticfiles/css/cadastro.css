@@ -19,25 +19,33 @@ input:focus, label:focus {
 }
 
 a {
-    color: #085588;
+    color:#fff;
+}
+
+a:hover {
+    color: #c6a0ff;
+}
+
+p {
+    color: #fff;
 }
 
 h1 {
-    color: #085588;
+    color: #fff;
 }
 
 body {
     padding-top: 5vh;
-    background-image: url('../img/white.jpg');
+    background-image: url('../img/moedas.jpg');
     background-size: cover;
-    background-position-y: -150px;
+    background-position-y: -50px;
 }
 
 #main-container {
     width: 500px;
     margin-left: auto;
     margin-right: auto;
-    background-color: #fff;
+    background-color: #131215;
     border-radius: 10px;
     padding: 25px;
 }
@@ -72,6 +80,7 @@ form {
 label {
     font-weight: bold;
     font-size: 0.8rem;
+    color: #fff;
 }
 
 input {
@@ -95,17 +104,23 @@ input {
 }
 
 input:focus {
-    border-color: #E60084;
+    border-color: #bc28e6;
 }
 
 input[type="submit"] {
-    background-color: #085588;
+    background-color: #5b1481;
     color: #fff;
     border: none;
+    font-weight: bold;
     padding: 5px;
     border-radius: 20px;
     height: 40px;
     cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #7F28B5;
+    transition: .5s;
 }
 
 #agreement {
@@ -124,6 +139,14 @@ input[type="submit"] {
     position: absolute;
     top: 57px;
     font-size: 0.8rem;
+}
+
+.error-validation-email {
+    color: #ff1a1a;
+    position: absolute;
+    font-size: 0.8rem;
+    padding: auto;
+    margin-top: 245px;
 }
 
 .error-validationTwo {

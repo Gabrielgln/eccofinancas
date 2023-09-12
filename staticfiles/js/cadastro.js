@@ -162,8 +162,8 @@ class Validator {
         //2 por conta que tem dois paragrafos criados no html
         if(countValidation == 2){
             form.submit();
-            alert("Você foi cadastrado com sucesso");
-            this.cleanInputs();
+            // alert("Você foi cadastrado com sucesso");
+            // this.cleanInputs();
         }
     }
 
