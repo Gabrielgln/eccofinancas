@@ -81,7 +81,7 @@ input {
 }
 
 input:focus {
-    border-bottom: 2px solid #2219cf;
+    border-bottom: 2px solid #bc28e6;
 }
 
 #forgot-pass {
