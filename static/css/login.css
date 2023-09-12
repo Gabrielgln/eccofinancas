@@ -81,7 +81,7 @@ input {
 }
 
 input:focus {
-    border-bottom: 2px solid #2219cf;
+    border-bottom: 2px solid #bc28e6;
 }
 
 #forgot-pass {
@@ -112,7 +112,6 @@ input[type="submit"]:hover {
 .error-validation {
     color: #ff1a1a;
     position: absolute;
-    top: 57px;
     font-size: 0.8rem;
 }
 

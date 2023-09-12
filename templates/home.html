@@ -1,11 +1,108 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+  <title>Home</title>
 </head>
+
 <body>
-    <h1>Olá, {{usuario}}</h1>
+
+  <header>
+    <nav class="nav-bar">
+      <div class="logo">
+        <h1>EccoFinanças</h1>
+      </div>
+      <div class="nav-list">
+        <ul>
+          <li class="nav-item"><a href="#" class="nav-link">Início</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">Projetos</a></li>
+          <li class="nav-item"><a href="#" class="nav-link"> Sobre</a></li>
+        </ul>
+      </div>
+      <div class="logout-button">
+        <button><a href="#">Sair</a></button>
+      </div>
+      <div class="mobile-menu-icon">
+        <button onclick="menuShow()"><img class="icon" src="{% static 'img/menu_white_36dp.svg' %}" alt=""></button>
+      </div>
+    </nav>
+    <div class="mobile-menu">
+      <ul>
+        <li class="nav-item"><a href="#" class="nav-link">Início</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">Projetos</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">Sobre</a></li>
+      </ul>
+      <div class="logout-button">
+        <button><a href="#">Sair</a></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="container">
+      <div class="container-table">
+        <div class="title-table">
+          <h2>Minhas contas</h2>
+        </div>
+        <div class="header-table">
+          <label for="filter-table">Filtre:</label>
+          <input type="text" name="filter" id="filter-table" placeholder="Digite a descrição da sua conta">
+          <button class="btn-new-account" onclick="openModal()" id="btn-new-account">Nova conta</i></button>
+        </div>
+        <div class="table">
+          <table>
+            <thead>
+              <tr>
+                <th>Descrição</th>
+                <th>Categoria</th>
+                <th>Parcelas pagas</th>
+                <th>Parcelas pendentes</th>
+                <th class="acao">Status</th>
+                <th class="acao">Editar</th>
+                <th class="acao">Excluir</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Paulo</td>
+                <td>100</td>
+                <td>2.00</td>
+                <td>10</td>
+                <td class="acao">0</td>
+                <td class="acao">
+                  <div>
+                    <a href=""><i class="bx bx-edit"></i></a>
+                  </div>
+                </td>
+                <td class="acao">
+                  <div>
+                    <a href=""><i class="bx bx-trash"></i></a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="{% static 'js/home.js' %}"></script>
+  <script>
+    function menuShow() {
+      let menuMobile = document.querySelector('.mobile-menu');
+      if (menuMobile.classList.contains('open')) {
+        menuMobile.classList.remove('open');
+        document.querySelector('.icon').src = "{% static 'img/menu_white_36dp.svg' %}";
+      } else {
+        menuMobile.classList.add('open');
+        document.querySelector('.icon').src = "{% static 'img/close_white_36dp.svg' %}";
+      }
+    }
+  </script>
 </body>
 </html>

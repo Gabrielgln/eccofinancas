@@ -16,6 +16,11 @@
             <input type="text" name="email" id="enail" placeholder="Digite seu e-mail" autocomplete="off">
             <label for="password">Senha</label>
             <input type="password" name="password" id="password" placeholder="Digite a sua senha">
+            {% for message in messages %}
+            <div class="error-validation">
+                <strong></strong>{{ message }}
+            </div>
+            {% endfor %}
             <a href="#" id="forgot-pass">Esqueceu a senha?</a>
             <input type="submit" value="Entrar">
         </form>
@@ -23,11 +28,6 @@
             <p>Ainda não tem uma conta?</p>
             <a href="{% url 'cadastro' %}">Cadastre-se</a>
         </div>
-        {% for message in messages %}
-        <div align="center">
-            <strong class="error-validation">Erro! </strong>{{ message }}
-        </div>
-        {% endfor %}
     </div>
     <script src="{% static 'js/Login.js' %}"></script>
 </body>

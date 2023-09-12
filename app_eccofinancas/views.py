@@ -11,16 +11,20 @@ def cadastro(request):
         first_name = request.POST.get('name')
         last_name = request.POST.get('lastname')
         password = request.POST.get('password')
- 
-        user = User.objects.create_user(email=email, 
-                                        username=email, 
-                                        first_name=first_name,
-                                        last_name=last_name, 
-                                        password=password)
-        user.save()
-        #Assim que salvar o usuario novo, logar no sistema
-        login(request, user)
-        return redirect('/')
+
+        result = User.objects.filter(username=email).first()
+        if result:
+            messages.error(request, "Este nome de usuário já está em uso. Tente outro.")
+        else:
+            user = User.objects.create_user(email=email, 
+                                            username=email, 
+                                            first_name=first_name,
+                                            last_name=last_name, 
+                                            password=password)
+            user.save()
+            #Assim que salvar o usuario novo, logar no sistema
+            login(request, user)
+            return redirect('/')
     return render(request,"cadastro.html")
 
 def conectar(request):
@@ -32,7 +36,7 @@ def conectar(request):
             login(request, usuario)
             return redirect('/')
         else: 
-            messages.error(request, "Usuário ou senha inválidos")
+            messages.error(request, "Seu usuário ou senha estão incorretos.")
     return render(request,'login.html')
 
 def home(request):
