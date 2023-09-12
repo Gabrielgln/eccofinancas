@@ -1,0 +1,271 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap');
+
+*{
+	box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+header {
+  background-color: #000000;
+  box-shadow: 0px 3px 10px #464646;
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem 6rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo h1 {
+  color: #fff;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+}
+
+.nav-list ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+
+.nav-item {
+  margin: 0 15px;
+}
+
+.nav-link {
+  text-decoration: none;
+  font-size: 1.15rem;
+  color: #fff;
+  font-weight: 400;
+}
+
+.logout-button button {
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  background-color: #0187a7;
+}
+
+.logout-button button a {
+  text-decoration: none;
+  font-size: 15px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.mobile-menu-icon {
+  display: none;
+}
+
+.mobile-menu {
+  display: none;
+}
+
+body{
+	font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+  background-color: rgba(0,0,0,0.1);
+}
+
+.container{
+	width: 99%;
+	height: 100%;
+	margin: 0 auto;
+  margin-top: 2%;
+}
+
+.container-table {
+  border-radius: 10px;
+  background: white;
+}
+
+.title-table { 
+  padding: 10px;
+}
+
+.header-table {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.header-table label,
+.header-table input {
+  margin-right: 5px; /* Adiciona margem à direita da label e do input */
+}
+
+.header-table button {
+  margin-left: auto; /* Move o botão para a extremidade direita da div */
+}
+
+.btn-new-account {
+  font-size: 15px;
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  background-color: rgb(57, 57, 226);
+  width: 100px;
+	height: 40px;
+}
+
+.table {
+  padding: 10px;
+  width: auto; 
+  height:inherit; 
+  overflow:auto;
+}
+
+section{
+	margin: 2em 0;
+	overflow: hidden;
+}
+
+section h2{
+	font-size: 2em;
+	display: block;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ccccccae;
+	margin-bottom: .5em;
+}
+
+table{
+  width: 100%;
+  border-spacing: 10px;
+  word-break: break-all;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: whitesmoke;
+}
+
+tr {
+  border-bottom: 1px solid rgb(238, 235, 235)!important;
+}
+
+tbody tr td {
+  vertical-align: text-top;
+  padding: 6px;
+  max-width: 50px;
+}
+
+thead tr th {
+  padding: 5px;
+  text-align: start;
+  margin-bottom: 50px;
+}
+
+tbody tr {
+  margin-bottom: 50px;
+}
+
+thead tr th.acao {
+  width: 100px;
+  text-align: center;
+}
+
+tbody tr td.acao {
+  text-align: center;
+}
+
+label{
+	color: #555;
+	display: block;
+	margin-bottom: .2em;
+}
+
+button:active{
+	margin-top:0px;
+	border: 0;
+}
+
+button[disabled=disabled], button:disabled {
+    background-color: gray;
+	border-color: darkgray;
+}
+
+#filter-table{
+	width: 200px;
+	height: 35px;
+	margin-bottom: 10px;
+}
+
+@media screen and (max-width: 730px) {
+    .nav-bar {
+        padding: 1.5rem 4rem;
+    }
+    .nav-item {
+        display: none;
+    }
+    .logout-button {
+        display: none;
+    }
+    .mobile-menu-icon {
+        display: block;
+    }
+    .mobile-menu-icon button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+    .mobile-menu ul {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        padding-bottom: 1rem;
+    }
+    .mobile-menu .nav-item {
+        display: block;
+        padding-top: 1.2rem;
+    }
+    .mobile-menu .logout-button {
+        display: block;
+        padding: 1rem 2rem;
+    }
+    .mobile-menu .logout-button button {
+        width: 100%;
+    }
+    .open {
+        display: block;
+    }
+    .header-table{
+      display: flex;
+      flex-direction: column;
+    }
+    h2{
+      text-align: center;
+    }
+    .btn-new-account {
+      font-size: 10px;
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+      color: white;
+      background-color: rgb(57, 57, 226);
+      width: 15vw;
+      height: auto;
+    }
+    .header-table button {
+      margin-left: 0;
+    }
+    .table{
+      padding: 10px;
+      width: auto;
+      height: inherit;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+}

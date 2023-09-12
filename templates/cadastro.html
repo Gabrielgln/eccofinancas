@@ -32,6 +32,11 @@
                 <label for="passconfirmation">Confirmação de senha</label>
                 <input type="password" name="passconfirmation" id="passconfirmation" placeholder="Confirme a sua senha" data-min-length="3" data-max-length="16" data-required data-equal="password" data-password-validate>
             </div>
+            {% for message in messages %}
+                <div class="error-validation-email">
+                    <strong></strong>{{ message }}
+                </div>
+            {% endfor %}
             <div class="full-box checkbox">
                 <input type="checkbox" name="agreement" id="agreement" class="agreement">
                 <label for="agreement" id="agreement-label">Li e concordo com os <a href="">Termos de Uso</a> e <a href="">Política de Privacidade.</a></label>
