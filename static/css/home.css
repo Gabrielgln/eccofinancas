@@ -12,10 +12,24 @@ header {
   box-shadow: 0px 3px 10px #464646;
 }
 
+body {
+  background-image: url('../img/moedas.jpg');
+  background-size: cover;
+  background-position-y: -50px;
+}
+
 .nav-bar {
   display: flex;
   justify-content: space-between;
   padding: 1.5rem 6rem;
+}
+
+.nav-link {
+  transition: 0.5s ease;
+}
+
+.nav-link:hover{
+  color: #9d41d6;
 }
 
 .logo {
@@ -26,6 +40,11 @@ header {
 .logo h1 {
   color: #fff;
 }
+
+.title-table h2 {
+  color: #fff;
+}
+
 
 .nav-list {
   display: flex;
@@ -53,7 +72,7 @@ header {
   border: none;
   padding: 10px 15px;
   border-radius: 5px;
-  background-color: #0187a7;
+  background-color: #6d01a7;
 }
 
 .logout-button button a {
@@ -87,7 +106,7 @@ body{
 
 .container-table {
   border-radius: 10px;
-  background: white;
+  background: #000000;
 }
 
 .title-table { 
@@ -110,13 +129,17 @@ body{
   margin-left: auto; /* Move o botão para a extremidade direita da div */
 }
 
+.header-table label{
+  color: #fff;
+}
+
 .btn-new-account {
   font-size: 15px;
   padding: 8px;
   border-radius: 5px;
   border: none;
   color: white;
-  background-color: rgb(57, 57, 226);
+  background-color: rgb(16, 171, 29);
   width: 100px;
 	height: 40px;
 }
@@ -126,6 +149,16 @@ body{
   width: auto; 
   height:inherit; 
   overflow:auto;
+}
+
+.edit {
+  color: yellow;
+  font-size: 20px;
+}
+
+.delete {
+  color: crimson;
+  font-size: 20px;
 }
 
 section{
@@ -160,12 +193,16 @@ tbody tr td {
   vertical-align: text-top;
   padding: 6px;
   max-width: 50px;
+  color: #fff;
+  white-space: nowrap;
 }
 
 thead tr th {
   padding: 5px;
   text-align: start;
   margin-bottom: 50px;
+  background-color: #000000;
+  color: #fff;
 }
 
 tbody tr {
