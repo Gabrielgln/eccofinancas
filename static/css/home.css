@@ -97,11 +97,12 @@ body{
   background-color: rgba(0,0,0,0.1);
 }
 
-.container{
+.container-custom{
 	width: 99%;
 	height: 100%;
 	margin: 0 auto;
   margin-top: 2%;
+  padding: 10px;
 }
 
 .container-table {

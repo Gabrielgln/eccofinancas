@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
   <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
   <title>Home</title>
 </head>
 
@@ -44,7 +45,7 @@
   </header>
 
   <main>
-    <section class="container">
+    <section class="container-custom">
       <div class="container-table">
         <div class="title-table">
           <h2>Minhas contas</h2>
@@ -62,26 +63,33 @@
                 <th>Categoria</th>
                 <th>Parcelas pagas</th>
                 <th>Parcelas pendentes</th>
+                <th>Valor unitário</th>
+                <th>Data de vencimento</th>
+                <th>Valor total</th>
                 <th class="acao">Status</th>
-                <th class="acao">Editar</th>
-                <th class="acao">Excluir</th>
+                <th class="acao">Ações</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>Celular</td>
+                <td>Ñ recorrente</td>
+                <td>2</td>
+                <td>8</td>
                 <td>100</td>
-                <td>2.00</td>
-                <td>10</td>
-                <td class="acao">0</td>
+                <td>10/10/2023</td>
+                <td>1000</td>
+                <td class="acao">Pendente</td>
                 <td class="acao">
-                  <div>
-                    <a class="edit" href=""><i class="bx bx-edit"></i></a>
-                  </div>
-                </td>
-                <td class="acao">
-                  <div>
-                    <a class="delete" href=""><i class="bx bx-trash"></i></a>
+                  <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Ações
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">Pagar</a></li>
+                      <li><a class="dropdown-item" href="#">Editar</a></li>
+                      <li><a class="dropdown-item" href="#">Excluir</a></li>
+                    </ul>
                   </div>
                 </td>
               </tr>
@@ -92,6 +100,7 @@
     </section>
   </main>
   <script src="{% static 'js/home.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script>
     function menuShow() {
       let menuMobile = document.querySelector('.mobile-menu');
