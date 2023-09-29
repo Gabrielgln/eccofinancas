@@ -4,7 +4,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Helvetica;
     color: #323232;
     border: none;
 }
@@ -46,7 +45,7 @@ a:hover {
     color: #c6a0ff;
 }
 
-#login-container {
+/* #main-container {
     background-color: #131215;
     width: 400px;
     margin-left: auto;
@@ -55,6 +54,21 @@ a:hover {
     margin-top: 10vh;
     border-radius: 10px;
     text-align: center;
+} */
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#main-container {
+    background-color: #131215;
+    width: 500px;
+    padding: 20px 30px;
+    border-radius: 10px;
+    text-align: start;
 }
 
 form {
@@ -85,7 +99,6 @@ input:focus {
 }
 
 #forgot-pass {
-    
     color: #fff;
     text-align: right;
     display: block;
@@ -115,6 +128,7 @@ input[type="submit"]:hover {
     font-size: 0.8rem;
 }
 
-#register-container p {
+#register-container{
+    text-align: center;
     margin-bottom: 10px;
 }

@@ -5,8 +5,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
   <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
   <title>Home</title>
 </head>
@@ -14,15 +16,15 @@
 <body>
 
   <header>
-    <nav class="nav-bar">
+    <nav class="nav-bar-custom">
       <div class="logo">
         <h1>Eccofinanças</h1>
       </div>
-      <div class="nav-list">
+      <div class="nav-list-custom">
         <ul>
-          <li class="nav-item"><a href="#" class="nav-link">Início</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">Projetos</a></li>
-          <li class="nav-item"><a href="#" class="nav-link"> Sobre</a></li>
+          <li class="nav-item-custom"><a href="#" class="nav-link-custom">Início</a></li>
+          <li class="nav-item-custom"><a href="#" class="nav-link-custom">Projetos</a></li>
+          <li class="nav-item-custom"><a href="#" class="nav-link-custom"> Sobre</a></li>
         </ul>
       </div>
       <div class="logout-button">
@@ -34,9 +36,9 @@
     </nav>
     <div class="mobile-menu">
       <ul>
-        <li class="nav-item"><a href="#" class="nav-link">Início</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Projetos</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Sobre</a></li>
+        <li class="nav-item-custom"><a href="#" class="nav-link-custom">Início</a></li>
+        <li class="nav-item-custom"><a href="#" class="nav-link-custom">Projetos</a></li>
+        <li class="nav-item-custom"><a href="#" class="nav-link">Sobre</a></li>
       </ul>
       <div class="logout-button">
         <button><a href="#">Sair</a></button>
@@ -52,8 +54,8 @@
         </div>
         <div class="header-table">
           <label for="filter-table">Filtre:</label>
-          <input type="text" name="filter" id="filter-table" placeholder="Digite a descrição da sua conta">
-          <button class="btn-new-account" onclick="openModal()" id="btn-new-account">Nova conta</i></button>
+          <input type="text" name="filter" id="filter-table" placeholder="Pesquise">
+          <a class="btn btn-primary btn-lg" href="{% url 'nova_conta' %}" role="button">Nova conta</a>
         </div>
         <div class="table">
           <table>

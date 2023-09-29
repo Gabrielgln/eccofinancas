@@ -23,4 +23,7 @@ urlpatterns = [
     path('cadastro/', views.cadastro, name='cadastro'),
     path('login/', views.conectar, name='conectar'),
     path('', views.home, name='home'),
+    path('solicitar_email/', views.solicitar_email, name='solicitar_email'),
+    path('redefinir_senha/<str:token>/', views.redefinir_senha, name='redefinir_senha'),
+    path('conta/nova_conta',views.nova_conta, name='nova_conta')
 ]
