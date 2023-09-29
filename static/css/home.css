@@ -44,6 +44,10 @@ body {
   color: #fff;
 }
 
+.sobrepor {
+  z-index: 3;
+}
+
 
 .nav-list {
   display: flex;
@@ -146,7 +150,8 @@ body{
 .table {
   padding: 10px;
   width: auto; 
-  height:inherit; 
+  height:inherit;
+  min-height: 300px; 
   overflow:auto;
 }
 

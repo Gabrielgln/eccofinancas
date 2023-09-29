@@ -29,4 +29,6 @@ class User(AbstractUser):
     def verification_token_expiration_date():
         pass
     
-
+class Categoria(models.Model):
+    id = models.AutoField(primary_key=True)
+    descricao = models.TextField(max_length=255)
