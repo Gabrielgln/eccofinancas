@@ -263,7 +263,7 @@ button[disabled=disabled], button:disabled {
         text-align: center;
         padding-bottom: 1rem;
     }
-    .mobile-menu .nav-item {
+    .mobile-menu .nav-item-custom {
         display: block;
         padding-top: 1.2rem;
     }
