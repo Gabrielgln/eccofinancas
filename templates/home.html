@@ -55,27 +55,34 @@
           <input type="text" name="filter" id="filter-table" placeholder="Pesquise">
           <a class="btn btn-primary btn-lg" href="{% url 'nova_conta' %}" role="button">Nova conta</a>
         </div>
-        <div class="table">
+        <div class="table-custom">
           <table>
             <thead>
               <tr>
                 <th>Descrição</th>
                 <th>Categoria</th>
+                <th>Numero de parcelas</th>
                 <th>Parcelas pagas</th>
-                <th>Parcelas pendentes</th>
                 <th>Valor total</th>
+                <th>Data de vencimento</th>
                 <th class="acao">Status</th>
                 <th class="acao">Ações</th>
               </tr>
             </thead>
             <tbody>
+              {% for conta in contas %}
               <tr>
-                <td><a href="{% url 'nova_conta' %}">Celular</a></td>
-                <td>Ñ recorrente</td>
-                <td>2</td>
-                <td>8</td>
-                <td>100</td>
+                <td><a href="{% url 'nova_conta' %}">{{conta.descricao}}</a></td>
+                <td>{{conta.categoria_id_id}}</td>
+                <td>{{conta.numero_parcelas}}</td>
+                <td>{{conta.parcelas_pagas}}</td>
+                <td>{{conta.valor_total}}</td>
+                <td>{{conta.data_vencimento_inicial}}</td>
+                {% if conta.status == True %}
+                <td class="acao">Finalizado</td>
+                {% else %}
                 <td class="acao">Pendente</td>
+                {% endif %}
                 <td class="acao">
                   <div class="dropdown">
                     <button class="sobrepor btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -83,12 +90,13 @@
                     </button>
                     <ul class="dropdown-menu">
                       <li><a class="dropdown-item" href="#">Pagar</a></li>
-                      <li><a class="dropdown-item" href="#">Editar</a></li>
-                      <li><a class="dropdown-item" href="#">Excluir</a></li>
+                      <li><a class="dropdown-item" href="conta/editar_conta/{{conta.id}}">Editar</a></li>
+                      <li><a class="dropdown-item" href="conta/apagar_conta/{{conta.id}}">Excluir</a></li>
                     </ul>
                   </div>
                 </td>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>
