@@ -7,8 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
-  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
   <title>Home</title>
 </head>
@@ -65,8 +63,6 @@
                 <th>Categoria</th>
                 <th>Parcelas pagas</th>
                 <th>Parcelas pendentes</th>
-                <th>Valor unitário</th>
-                <th>Data de vencimento</th>
                 <th>Valor total</th>
                 <th class="acao">Status</th>
                 <th class="acao">Ações</th>
@@ -74,13 +70,11 @@
             </thead>
             <tbody>
               <tr>
-                <td>Celular</td>
+                <td><a href="{% url 'nova_conta' %}">Celular</a></td>
                 <td>Ñ recorrente</td>
                 <td>2</td>
                 <td>8</td>
                 <td>100</td>
-                <td>10/10/2023</td>
-                <td>1000</td>
                 <td class="acao">Pendente</td>
                 <td class="acao">
                   <div class="dropdown">

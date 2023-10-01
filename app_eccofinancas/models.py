@@ -32,3 +32,21 @@ class User(AbstractUser):
 class Categoria(models.Model):
     id = models.AutoField(primary_key=True)
     descricao = models.TextField(max_length=255)
+
+class Conta(models.Model):
+    id = models.AutoField(primary_key=True)
+    descricao = models.TextField(max_length=50)
+    categoria_id = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    numero_parcelas = models.IntegerField(null=True, blank=True)
+    parcelas_pagas = models.IntegerField(null=False, blank=False, default=0)
+    valor_total = models.FloatField(null=True, blank=True)
+    data_vencimento_inicial = models.DateField(null=True, blank=True)
+    status = models.BooleanField(null=False, blank=False, default=False)
+
+class Conta_Unitaria(models.Model):
+    id = models.AutoField(primary_key=True)
+    conta_id = models.ForeignKey(Conta, on_delete=models.CASCADE)
+    numero_parcela = models.IntegerField(null=True, blank=True)
+    valor_unitario = models.FloatField(null=True, blank=True)
+    data_vencimento = models.DateField(null=True, blank=True)
+    status = models.BooleanField(null=False, blank=False, default=False)

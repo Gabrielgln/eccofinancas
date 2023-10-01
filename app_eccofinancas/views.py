@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from app_eccofinancas.models import User
+from app_eccofinancas.models import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.utils import timezone
@@ -93,7 +93,8 @@ def home(request):
     return render(request, 'home.html', data)
 
 def nova_conta(request):
+    categorias = Categoria.objects.all()
     if request.method == 'POST':
         descricao = request.POST.get('descricao').strip()
         print(descricao)
-    return render(request, 'nova_conta.html')
+    return render(request, 'nova_conta.html', {'categorias':categorias})

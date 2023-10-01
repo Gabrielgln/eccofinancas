@@ -151,19 +151,9 @@ body{
   padding: 10px;
   width: auto; 
   height:inherit;
-  min-height: 300px; 
   overflow:auto;
 }
 
-.edit {
-  color: yellow;
-  font-size: 20px;
-}
-
-.delete {
-  color: crimson;
-  font-size: 20px;
-}
 
 section{
 	margin: 2em 0;
@@ -178,12 +168,6 @@ section h2{
 	margin-bottom: .5em;
 }
 
-table{
-  width: 100%;
-  border-spacing: 10px;
-  word-break: break-all;
-  border-collapse: collapse;
-}
 
 thead {
   background-color: whitesmoke;
@@ -302,7 +286,7 @@ button[disabled=disabled], button:disabled {
     .header-table a {
       margin-left: 0;
     }
-    .table{
+    .table-custom{
       padding: 10px;
       width: auto;
       height: inherit;

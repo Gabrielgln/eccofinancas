@@ -19,8 +19,11 @@
                 <div class="col-12">
                     <label for="categoria" class="form-label">Categoria</label>
                     <select id="categoria" class="form-select" name="categoria">
-                      <option selected>Choose...</option>
-                      <option>...</option>
+                      
+                      <option selected></option>
+                      {% for categoria in categorias %}
+                      <option value="{{categoria.id}}">{{categoria.descricao}}</option>
+                      {% endfor %}
                     </select>
                 </div>
                 <div class="col-md-6">
@@ -36,22 +39,13 @@
                   <input type="number" class="form-control" id="valor_total" name="valor_total">
                 </div>
                 <div class="col-md-6">
-                  <label for="data_vencimento" class="form-label">Data de vencimento</label>
+                  <label for="data_vencimento" class="form-label">Data de vencimento inicial</label>
                   <input type="date" class="form-control" id="data_vencimento" name="data_vencimento">
                 </div>
                 <div class="col-12">
                   <button type="submit" class="btn btn-primary">Cadastrar</button>
+                  <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Cancelar</a>
                 </div>
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Dropdown button
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Action</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                  </div>
               </form>
         </div>
     </main>
