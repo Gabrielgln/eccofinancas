@@ -27,15 +27,15 @@
                 </div>
                 <div class="col-md-6">
                   <label for="numero_parcela" class="form-label">Numero de parcelas</label>
-                  <input type="number" class="form-control" id="numero_parcela" name="numero_parcela" required>
+                  <input type="number" min="1" max="99" class="form-control" id="numero_parcela" name="numero_parcela" required>
                 </div>
                 <div class="col-md-6">
                   <label for="numero_parcela_paga" class="form-label">Numero de parcelas pagas</label>
-                  <input type="number" class="form-control" id="numero_parcela_paga" name="numero_parcela_paga" required>
+                  <input type="number" min="0" class="form-control" id="numero_parcela_paga" name="numero_parcela_paga" required>
                 </div>
                 <div class="col-md-6">
                   <label for="valor_total" class="form-label">Valor total</label>
-                  <input type="number" step="any" class="form-control" id="valor_total" name="valor_total" required>
+                  <input type="number" min="1" step="any" class="form-control" id="valor_total" name="valor_total" required>
                 </div>
                 <div class="col-md-6">
                   <label for="data_vencimento" class="form-label">Data de vencimento inicial</label>
@@ -48,5 +48,13 @@
               </form>
         </div>
     </main>
+    <script>
+      const numero_parcela = document.getElementById("numero_parcela");
+      const numero_parcela_paga = document.getElementById("numero_parcela_paga");
+  
+      numero_parcela.addEventListener("input", function () {
+        numero_parcela_paga.max = numero_parcela.value;
+      });
+    </script>
 </body>
 </html>

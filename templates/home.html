@@ -73,7 +73,11 @@
               {% for conta in contas %}
               <tr>
                 <td><a href="{% url 'nova_conta' %}">{{conta.descricao}}</a></td>
-                <td>{{conta.categoria_id_id}}</td>
+                {% for categoria in categorias %}
+                {% if categoria.id == conta.categoria_id_id %}
+                <td>{{categoria.descricao}}</td>
+                {% endif %}
+                {% endfor %}
                 <td>{{conta.numero_parcelas}}</td>
                 <td>{{conta.parcelas_pagas}}</td>
                 <td>{{conta.valor_total}}</td>
@@ -91,7 +95,10 @@
                     <ul class="dropdown-menu">
                       <li><a class="dropdown-item" href="#">Pagar</a></li>
                       <li><a class="dropdown-item" href="conta/editar_conta/{{conta.id}}">Editar</a></li>
-                      <li><a class="dropdown-item" href="conta/apagar_conta/{{conta.id}}">Excluir</a></li>
+                      <li>
+                        <a role="button" class="dropdown-item" href="{% url 'apagar_conta' conta.id %}" onclick="return confirm('Deseja realmente apagar a conta {{conta.descricao}}?')">Excluir</a>
+                    </li>
+                    
                     </ul>
                   </div>
                 </td>

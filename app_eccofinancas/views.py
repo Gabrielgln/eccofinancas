@@ -88,7 +88,8 @@ def home(request):
     print(usuario)
     data = {'usuario':usuario}
     contas = Conta.objects.all()
-    return render(request, 'home.html',{'contas':contas})
+    categorias = Categoria.objects.all()
+    return render(request, 'home.html',{'contas':contas, 'categorias':categorias})
 
 def nova_conta(request):
     categorias = Categoria.objects.all()

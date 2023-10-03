@@ -77,7 +77,10 @@ class Conta(models.Model):
                                                 data_vencimento_inicial)
             else:
                 for i in range(numero_parcelas):
-                    data_vencimento = data_vencimento_inicial + relativedelta(months=i)
+                    try:
+                        data_vencimento = data_vencimento_inicial.replace(month=data_vencimento_inicial.month + i)
+                    except ValueError:
+                        data_vencimento = data_vencimento_inicial + relativedelta(months=i)
                     conta_unitaria = Conta_Unitaria(conta_id_id=conta_id,
                                                     numero_parcela=i+1, 
                                                     valor_unitario=valor_unitario, 
@@ -86,7 +89,10 @@ class Conta(models.Model):
 
     def criar_conta_unitaria_paga(conta_id, numero_parcelas, parcelas_pagas, valor_unitario, data_vencimento_inicial):
         for i in range(parcelas_pagas):
-            data_vencimento = data_vencimento_inicial + relativedelta(months=i)
+            try:
+                data_vencimento = data_vencimento_inicial.replace(month=data_vencimento_inicial.month + i)
+            except ValueError:
+                data_vencimento = data_vencimento_inicial + relativedelta(months=i)
             conta_unitaria = Conta_Unitaria(conta_id_id=conta_id,
                                             numero_parcela=i+1,
                                             valor_unitario=valor_unitario, 
@@ -95,7 +101,10 @@ class Conta(models.Model):
             conta_unitaria.save()
 
         for i in range(parcelas_pagas,numero_parcelas):
-            data_vencimento = data_vencimento_inicial + relativedelta(months=i)
+            try:
+                data_vencimento = data_vencimento_inicial.replace(month=data_vencimento_inicial.month + i)
+            except ValueError:
+                data_vencimento = data_vencimento_inicial + relativedelta(months=i)
             conta_unitaria = Conta_Unitaria(conta_id_id=conta_id,
                                             numero_parcela=i+1,
                                             valor_unitario=valor_unitario,
@@ -127,7 +136,10 @@ class Conta(models.Model):
             else:
                 for i in range(self.numero_parcelas):
                     conta_unitaria = Conta_Unitaria.objects.get(conta_id=id_conta, numero_parcela=i+1)
-                    data_vencimento = self.data_vencimento_inicial + relativedelta(months=i)
+                    try:
+                        data_vencimento = self.data_vencimento_inicial.replace(month=self.data_vencimento_inicial.month + i)
+                    except ValueError:
+                        data_vencimento = self.data_vencimento_inicial + relativedelta(months=i)
                     conta_unitaria.numero_parcela=i+1
                     conta_unitaria.valor_unitario=valor_unitario
                     conta_unitaria.data_vencimento=data_vencimento
@@ -138,7 +150,10 @@ class Conta(models.Model):
         valor_unitario = valor_total / numero_parcelas
         for i in range(parcelas_pagas):
             conta_unitaria = Conta_Unitaria.objects.get(conta_id=conta_id, numero_parcela=i+1)
-            data_vencimento = data_vencimento_inicial + relativedelta(months=i)
+            try:
+                data_vencimento = data_vencimento_inicial.replace(month=data_vencimento_inicial.month + i)
+            except ValueError:
+                data_vencimento = data_vencimento_inicial + relativedelta(months=i)
             conta_unitaria.numero_parcela=i+1
             conta_unitaria.valor_unitario=valor_unitario
             conta_unitaria.data_vencimento=data_vencimento
@@ -147,7 +162,10 @@ class Conta(models.Model):
             
         for i in range(parcelas_pagas,numero_parcelas):
             conta_unitaria = Conta_Unitaria.objects.get(conta_id=conta_id, numero_parcela=i+1)
-            data_vencimento = data_vencimento_inicial + relativedelta(months=i)
+            try:
+                data_vencimento = data_vencimento_inicial.replace(month=data_vencimento_inicial.month + i)
+            except ValueError:
+                data_vencimento = data_vencimento_inicial + relativedelta(months=i)
             conta_unitaria.numero_parcela=i+1
             conta_unitaria.valor_unitario=valor_unitario
             conta_unitaria.data_vencimento=data_vencimento
