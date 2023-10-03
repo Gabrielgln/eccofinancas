@@ -25,5 +25,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('solicitar_email/', views.solicitar_email, name='solicitar_email'),
     path('redefinir_senha/<str:token>/', views.redefinir_senha, name='redefinir_senha'),
-    path('conta/nova_conta',views.nova_conta, name='nova_conta')
+    path('conta/nova_conta/',views.nova_conta, name='nova_conta'),
+    path('conta/editar_conta/<int:id_conta>/',views.editar_conta, name='editar_conta'),
+    path('conta/apagar_conta/<int:id_conta>/',views.apagar_conta, name='apagar_conta')
 ]
