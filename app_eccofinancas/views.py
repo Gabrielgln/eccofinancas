@@ -72,7 +72,7 @@ def redefinir_senha(request, token):
                 password = request.POST.get('email')
                 confirm_password = request.POST.get('confirm_password')
                 if password == confirm_password:
-                    usuario.password = password
+                    usuario.set_password(password)
                     usuario.token_confirmation = None
                     usuario.token_expiration_date = None
                     usuario.save()
