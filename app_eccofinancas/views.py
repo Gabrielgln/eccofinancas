@@ -6,8 +6,6 @@ from django.contrib import messages
 from django.utils import timezone
 from datetime import datetime
 
-# Create your views here.
-
 def cadastro(request):
     status = request.GET.get('status')
     if request.method == 'POST':
@@ -32,6 +30,7 @@ def cadastro(request):
     return render(request,"cadastro.html", {'status':status})
 
 def conectar(request):
+    status = request.GET.get('status')
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -41,9 +40,10 @@ def conectar(request):
             return redirect('/')
         else: 
             messages.error(request, "Seu usuário ou senha estão incorretos.")
-    return render(request,'login.html')
+    return render(request,'login.html', {'status':status})
 
 def solicitar_email(request):
+    status = request.GET.get('status')
     if request.method == 'POST':
         email = request.POST.get('email').strip()
         try:
@@ -52,16 +52,11 @@ def solicitar_email(request):
                 usuario.token_confirmation = User.generate_token_confirmation(32)
                 usuario.token_expiration_date = User.generate_token_expiration_date(1)
                 usuario.save()
-
                 User.send_email_redefinicao_senha(request, usuario.token_confirmation, email)
-                
+                return redirect('/solicitar_email/?status=0')
         except User.DoesNotExist:
-            print('entrou')
             messages.error(request, "Email não possui cadastro na nossa base de dados.")
-
-
-        
-    return render(request, 'solicitar_email.html')
+    return render(request, 'solicitar_email.html', {'status':status})
 
 def redefinir_senha(request, token):
     if request.method == 'POST':
@@ -69,13 +64,14 @@ def redefinir_senha(request, token):
             usuario = User.objects.get(token_confirmation=token)
             now = timezone.now().timestamp()
             if now < usuario.token_expiration_date.timestamp():
-                password = request.POST.get('email')
+                password = request.POST.get('password')
                 confirm_password = request.POST.get('confirm_password')
                 if password == confirm_password:
                     usuario.set_password(password)
                     usuario.token_confirmation = None
                     usuario.token_expiration_date = None
                     usuario.save()
+                    return redirect('/login/?status=0')
                 else:
                     messages.error(request, "As senhas não correspondem. Tente novamente.")
             else:

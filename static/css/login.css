@@ -124,7 +124,6 @@ input[type="submit"]:hover {
 
 .error-validation {
     color: #ff1a1a;
-    position: absolute;
     font-size: 0.8rem;
 }
 

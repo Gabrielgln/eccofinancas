@@ -17,12 +17,17 @@
         <div id="main-container">
             <h1>Redefinir senha</h1>
 
-            <form method="post">
+            <form method="POST">
                 {% csrf_token %}
                 <label for="password">Senha:</label>
                 <input type="password" name="password" id="password" placeholder="Digite sua senha" autocomplete="off">
                 <label for="password">Confirmar senha:</label>
                 <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirme sua senha" autocomplete="off">
+                {% for message in messages %}
+                <div class="error-validation">
+                    <strong></strong>{{ message }}
+                </div>
+                {% endfor %}
                 <!-- <a href="{% url 'solicitar_email' %}" id="forgot-pass">Esqueceu a senha?</a> -->
                 <input type="submit" value="Confirmar">
             </form>
