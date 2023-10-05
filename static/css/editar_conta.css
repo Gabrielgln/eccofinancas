@@ -1,0 +1,63 @@
+.form-label{
+    color: white    ;
+}
+
+.nav-list-custom > ul{
+    margin: 0;
+}
+
+.logout-button{
+    float: right;
+}
+
+.container-custom{
+    width: 99%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin-top: 50px; /* Espaçamento entre a barra de navegação e o container */
+    background-color: #000000;
+    border-radius: 10px;
+}
+
+.nav-bar-custom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    height: 60px; /* Defina o tamanho desejado da barra de navegação aqui */ /* Adicione uma cor de fundo ou estilo desejado */
+  }
+
+  .title-form {
+    color: #fff;
+    text-align: center;
+  }
+
+  .btn-custom {
+    color: #ffffff;
+    border-radius: 6px;
+    background-color: #6d01a7;
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+    padding-bottom: 0.375rem;
+    padding-top: 0.375rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    border: none;
+    height: 100%;
+    width: 6%;
+  }
+  
+  .btn-custom:hover {
+    background-color: #4f0179;
+  }
+  

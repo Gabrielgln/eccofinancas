@@ -5,24 +5,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
-  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <title>Home</title>
 </head>
 
 <body>
-
   <header>
-    <nav class="nav-bar">
+    <nav class="nav-bar-custom">
       <div class="logo">
         <h1>Eccofinanças</h1>
-      </div>
-      <div class="nav-list">
-        <ul>
-          <li class="nav-item"><a href="#" class="nav-link">Início</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">Projetos</a></li>
-          <li class="nav-item"><a href="#" class="nav-link"> Sobre</a></li>
-        </ul>
+        <div class="nav-list-custom">
+          <ul>
+            <li class="nav-item-custom"><a href="#" class="nav-link-custom">Início</a></li>
+            <li class="nav-item-custom"><a href="#" class="nav-link-custom">Projetos</a></li>
+            <li class="nav-item-custom"><a href="#" class="nav-link-custom"> Sobre</a></li>
+          </ul>
+        </div>
       </div>
       <div class="logout-button">
         <button><a href="#">Sair</a></button>
@@ -33,58 +34,72 @@
     </nav>
     <div class="mobile-menu">
       <ul>
-        <li class="nav-item"><a href="#" class="nav-link">Início</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Projetos</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Sobre</a></li>
+        <li class="nav-item-custom"><a href="#" class="nav-link-custom">Início</a></li>
+        <li class="nav-item-custom"><a href="#" class="nav-link-custom">Projetos</a></li>
+        <li class="nav-item-custom"><a href="#" class="nav-link-custom">Sobre</a></li>
       </ul>
       <div class="logout-button">
         <button><a href="#">Sair</a></button>
       </div>
     </div>
   </header>
-
   <main>
-    <section class="container">
+    <section class="container-custom">
       <div class="container-table">
         <div class="title-table">
           <h2>Minhas contas</h2>
         </div>
         <div class="header-table">
           <label for="filter-table">Filtre:</label>
-          <input type="text" name="filter" id="filter-table" placeholder="Digite a descrição da sua conta">
-          <button class="btn-new-account" onclick="openModal()" id="btn-new-account">Nova conta</i></button>
+          <input type="text" name="filter" id="filter-table" placeholder="Pesquise">
+          <a class="btn btn-outline-success" href="{% url 'nova_conta' %}" role="button">Nova conta</a>
         </div>
-        <div class="table">
+        <div class="table-custom">
           <table>
             <thead>
               <tr>
-                <th>Descrição</th>
-                <th>Categoria</th>
-                <th>Parcelas pagas</th>
-                <th>Parcelas pendentes</th>
+                <th class="acao">Descrição</th>
+                <th class="acao">Categoria</th>
+                <th class="acao">Numero de parcelas</th>
+                <th class="acao">Parcelas pagas</th>
+                <th class="acao">Valor total</th>
+                <th class="acao">Data de vencimento</th>
                 <th class="acao">Status</th>
-                <th class="acao">Editar</th>
-                <th class="acao">Excluir</th>
+                <th class="acao">Ações</th>
               </tr>
             </thead>
             <tbody>
+              {% for conta in contas %}
               <tr>
-                <td>Celular</td>
-                <td>100</td>
-                <td>2.00</td>
-                <td>10</td>
-                <td class="acao">0</td>
+                <td class="acao"><a href="{% url 'nova_conta' %}">{{conta.descricao}}</a></td>
+                {% for categoria in categorias %}
+                {% if categoria.id == conta.categoria_id_id %}
+                <td class="acao">{{categoria.descricao}}</td>
+                {% endif %}
+                {% endfor %}
+                <td class="acao">{{conta.numero_parcelas}}</td>
+                <td class="acao">{{conta.parcelas_pagas}}</td>
+                <td class="acao">{{conta.valor_total}}</td>
+                <td class="acao">{{conta.data_vencimento_inicial}}</td>
+                {% if conta.status == True %}
+                <td class="acao">Finalizado</td>
+                {% else %}
+                <td class="acao">Pendente</td>
+                {% endif %}
                 <td class="acao">
-                  <div>
-                    <a class="edit" href=""><i class="bx bx-edit"></i></a>
-                  </div>
-                </td>
-                <td class="acao">
-                  <div>
-                    <a class="delete" href=""><i class="bx bx-trash"></i></a>
+                  <div class="dropdown">
+                    <button class="sobrepor btn btn-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Ações
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                      <li><a class="dropdown-item" href="#">Pagar</a></li>
+                      <li><a class="dropdown-item" href="conta/editar_conta/{{conta.id}}">Editar</a></li>
+                      <li><a role="button" class="dropdown-item" href="{% url 'apagar_conta' conta.id %}" onclick="return confirm('Deseja realmente apagar a conta {{conta.descricao}}?')">Excluir</a></li>
+                    </ul>
                   </div>
                 </td>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>
@@ -92,6 +107,7 @@
     </section>
   </main>
   <script src="{% static 'js/home.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script>
     function menuShow() {
       let menuMobile = document.querySelector('.mobile-menu');

@@ -4,7 +4,6 @@
 	box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: 'Inter', sans-serif;
 }
 
 header {
@@ -18,10 +17,11 @@ body {
   background-position-y: -50px;
 }
 
-.nav-bar {
+.nav-bar-custom {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  padding: 1.5rem 6rem;
+  padding: 1rem;
 }
 
 .nav-link {
@@ -45,27 +45,31 @@ body {
   color: #fff;
 }
 
-
 .nav-list {
   display: flex;
   align-items: center;
 }
 
-.nav-list ul {
+.nav-list-custom ul {
   display: flex;
   justify-content: center;
   list-style: none;
 }
 
-.nav-item {
+.nav-item-custom {
   margin: 0 15px;
 }
 
-.nav-link {
+.nav-link-custom {
   text-decoration: none;
   font-size: 1.15rem;
   color: #fff;
   font-weight: 400;
+}
+
+.nav-link-custom:hover {
+  text-decoration: underline;
+  color: #6d01a7;
 }
 
 .logout-button button {
@@ -73,6 +77,11 @@ body {
   padding: 10px 15px;
   border-radius: 5px;
   background-color: #6d01a7;
+  width: 100%;
+}
+
+.logout-button button:hover {
+  background-color: #550183;
 }
 
 .logout-button button a {
@@ -92,23 +101,17 @@ body {
 }
 
 body{
-	font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 	font-size: 14px;
   background-color: rgba(0,0,0,0.1);
 }
 
-.container{
+.container-custom{
 	width: 99%;
 	height: 100%;
 	margin: 0 auto;
   margin-top: 2%;
+  padding: 10px;
 }
-
-.container-table {
-  border-radius: 10px;
-  background: #000000;
-}
-
 .title-table { 
   padding: 10px;
 }
@@ -125,7 +128,7 @@ body{
   margin-right: 5px; /* Adiciona margem à direita da label e do input */
 }
 
-.header-table button {
+.header-table a {
   margin-left: auto; /* Move o botão para a extremidade direita da div */
 }
 
@@ -147,19 +150,10 @@ body{
 .table {
   padding: 10px;
   width: auto; 
-  height:inherit; 
+  height:inherit;
   overflow:auto;
 }
 
-.edit {
-  color: yellow;
-  font-size: 20px;
-}
-
-.delete {
-  color: crimson;
-  font-size: 20px;
-}
 
 section{
 	margin: 2em 0;
@@ -174,12 +168,6 @@ section h2{
 	margin-bottom: .5em;
 }
 
-table{
-  width: 100%;
-  border-spacing: 10px;
-  word-break: break-all;
-  border-collapse: collapse;
-}
 
 thead {
   background-color: whitesmoke;
@@ -191,7 +179,7 @@ tr {
 
 tbody tr td {
   vertical-align: text-top;
-  padding: 6px;
+  padding: 7px;
   max-width: 50px;
   color: #fff;
   white-space: nowrap;
@@ -216,6 +204,7 @@ thead tr th.acao {
 
 tbody tr td.acao {
   text-align: center;
+  word-wrap: break-word; 
 }
 
 label{
@@ -230,7 +219,7 @@ button:active{
 }
 
 button[disabled=disabled], button:disabled {
-    background-color: gray;
+  background-color: gray;
 	border-color: darkgray;
 }
 
@@ -241,10 +230,10 @@ button[disabled=disabled], button:disabled {
 }
 
 @media screen and (max-width: 730px) {
-    .nav-bar {
+    .nav-bar-custom {
         padding: 1.5rem 4rem;
     }
-    .nav-item {
+    .nav-item-custom {
         display: none;
     }
     .logout-button {
@@ -264,7 +253,7 @@ button[disabled=disabled], button:disabled {
         text-align: center;
         padding-bottom: 1rem;
     }
-    .mobile-menu .nav-item {
+    .mobile-menu .nav-item-custom {
         display: block;
         padding-top: 1.2rem;
     }
@@ -285,7 +274,7 @@ button[disabled=disabled], button:disabled {
     h2{
       text-align: center;
     }
-    .btn-new-account {
+    .btn-primary {
       font-size: 10px;
       padding: 8px;
       border-radius: 5px;
@@ -295,14 +284,68 @@ button[disabled=disabled], button:disabled {
       width: 15vw;
       height: auto;
     }
-    .header-table button {
+    .header-table a {
       margin-left: 0;
     }
-    .table{
+    .table-custom{
       padding: 10px;
       width: auto;
       height: inherit;
       overflow-x: auto;
       white-space: nowrap;
     }
+}
+
+.table-custom {
+  width: 95%;
+  overflow-x: auto;
+  margin-bottom: 30px;
+}
+
+.table-custom table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-custom th,
+.table-custom td {
+  flex-grow: 1;
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.table-custom th {
+  background-color: #000000;
+}
+
+.container-table {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centralize horizontalmente */
+  align-items: center; /* Centralize verticalmente */
+}
+
+.header-table{
+  margin: 20px;
+  width: 80vw;
+  justify-content: space-between;
+}
+
+.container-table {
+  border-radius: 10px;
+  background: #000000;
+}
+
+.container-custom{
+  padding: 0px 100px 0px 100px;
+}
+
+.nav-list-custom > ul{
+  margin: 0;
+  margin-left: 20px;
+}
+
+.table-custom td {
+  word-wrap: break-word;
 }
