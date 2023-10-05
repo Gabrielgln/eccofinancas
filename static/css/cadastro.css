@@ -34,9 +34,9 @@ h1 {
 }
 
 body {
-    background-image: url('../img/moedas.jpg');
+    background-image: url(../img/pork-cadastro.jpeg);
     background-size: cover;
-    background-position-y: -50px;
+    background-position-y: -90px;
 }
 
 .container{

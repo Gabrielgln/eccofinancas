@@ -1,3 +1,9 @@
 #main-container {
     width: 600px;
 }
+
+body {
+    background-image: url(../img/pork-redefinir_senha.jpeg);
+    background-size: cover;
+    background-position-y: -90px;
+}

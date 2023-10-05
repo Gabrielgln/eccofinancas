@@ -9,14 +9,10 @@
 }
 
 body {
-    background-color: #1e192c;
+    background-image: url(../img/pork-login.jpg);
     background-size: cover;
-
 }
 
-body {
-    background-image: url(../img/cf.jpg);
-}
 
 h1 {
     font-variant:small-caps;

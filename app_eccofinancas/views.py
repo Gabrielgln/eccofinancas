@@ -182,8 +182,6 @@ def editar_conta(request, id_conta):
     return render(request, 'editar_conta.html', {'categorias':categorias, 'conta':conta})
 
 def apagar_conta(request, id_conta):
-    if request.method == 'POST':
-        conta = Conta.objects.get(id=id_conta)
-        conta.delete()
-        return redirect('/')
-    return render(request, 'apagar_conta.html')
+    conta = Conta.objects.get(id=id_conta)
+    conta.delete()
+    return redirect('/')
