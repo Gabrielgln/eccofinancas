@@ -4,20 +4,15 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Helvetica;
     color: #323232;
     border: none;
 }
 
 body {
-    background-color: #1e192c;
+    background-image: url(../img/pork-login.jpg);
     background-size: cover;
-
 }
 
-body {
-    background-image: url(../img/cf.jpg);
-}
 
 h1 {
     font-variant:small-caps;
@@ -46,7 +41,7 @@ a:hover {
     color: #c6a0ff;
 }
 
-#login-container {
+/* #main-container {
     background-color: #131215;
     width: 400px;
     margin-left: auto;
@@ -55,6 +50,21 @@ a:hover {
     margin-top: 10vh;
     border-radius: 10px;
     text-align: center;
+} */
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#main-container {
+    background-color: #131215;
+    width: 500px;
+    padding: 20px 30px;
+    border-radius: 10px;
+    text-align: start;
 }
 
 form {
@@ -85,7 +95,6 @@ input:focus {
 }
 
 #forgot-pass {
-    
     color: #fff;
     text-align: right;
     display: block;
@@ -111,10 +120,10 @@ input[type="submit"]:hover {
 
 .error-validation {
     color: #ff1a1a;
-    position: absolute;
     font-size: 0.8rem;
 }
 
-#register-container p {
+#register-container{
+    text-align: center;
     margin-bottom: 10px;
 }
