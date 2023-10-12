@@ -1,0 +1,42 @@
+{% extends "model_page.html" %}
+{% block title %}
+    <title>Conta bancária</title>
+{% endblock %}
+<body>
+    {% block content %}
+    <div class="container-teste">
+        <h1>Minha contas bancárias</h1>
+        <a class="btn btn-outline-success" href="{% url 'add_conta_bancaria' %}" role="button">Nova conta</a>
+    <table class="teste">
+        <thead>
+          <tr>
+            <th scope="col">Banco</th>
+            <th scope="col">Saldo</th>
+            <th scope="col">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+        {%for bank in banks %}
+          <tr>
+            <td>{{bank.fullName}}</td>
+            <td>Otto</td>
+            <td>
+                <div class="dropdown">
+                <button class="sobrepor btn btn-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Ações
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                  <li><a class="dropdown-item" href="">Editar</a></li>
+                  <li><a role="button" class="dropdown-item" href="" onclick="return confirm('Deseja realmente apagar a conta?')">Excluir</a></li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+      
+
+    {% endblock %}
+</body>

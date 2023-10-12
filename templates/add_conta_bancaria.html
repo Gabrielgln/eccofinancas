@@ -1,0 +1,35 @@
+{% extends "model_page.html" %}
+{% load static %}
+
+{% block title %}
+    <title>Adicionar conta bancária</title>
+{% endblock %}
+<body>
+    {% block content %}
+
+    <div class="container-custom">
+        <h1 class="title-form">Criar conta</h1>
+        <form class="row g-3" method="POST" action="{% url 'add_conta_bancaria' %}">
+          {% csrf_token %}
+          <div class="col-7">
+            <label for="bankInput" class="form-label">Banco</label>
+            <input type="text" id="bankInput" list="banksList" placeholder="Informe o banco" name="fullNameBank">
+            <datalist id="banksList">
+                {% for bank in banks %}
+                <option value="{{bank.fullName}}"></option>
+                {% endfor %}
+                
+            </datalist>
+          </div>    
+          <div class="col-md-7">
+            <label for="saldo" class="form-label">Saldo</label>
+            <input type="number" min="0" step="any" class="form-control" id="saldo" name="saldo" required>
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn-custom">Cadastrar</button>
+            <a class="btn btn-secondary" href="{% url 'conta_bancaria' %}" role="button">Cancelar</a>
+          </div>
+        </form>
+      </div>
+    {% endblock %}
+</body>
