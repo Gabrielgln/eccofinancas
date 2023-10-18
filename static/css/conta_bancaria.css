@@ -5,3 +5,355 @@
     background-color: #000000;
     border-radius: 10px;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap');
+
+*{
+	box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+header {
+  background-color: #000000;
+  box-shadow: 0px 3px 10px #464646;
+}
+
+body {
+  background-image: url('../img/moedas.jpg');
+  background-size: cover;
+  background-position-y: -50px;
+}
+
+.nav-bar-custom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.nav-link {
+  transition: 0.5s ease;
+}
+
+.nav-link:hover{
+  color: #9d41d6;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo h1 {
+  color: #fff;
+}
+
+.title-table h2 {
+  color: #fff;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+}
+
+.nav-list-custom ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+
+.nav-item-custom {
+  margin: 0 15px;
+}
+
+.nav-link-custom {
+  text-decoration: none;
+  font-size: 1.15rem;
+  color: #fff;
+  font-weight: 400;
+}
+
+.nav-link-custom:hover {
+  text-decoration: underline;
+  color: #6d01a7;
+}
+
+.logout-button button {
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  background-color: #6d01a7;
+  width: 100%;
+}
+
+.logout-button button:hover {
+  background-color: #550183;
+}
+
+.logout-button button a {
+  text-decoration: none;
+  font-size: 15px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.mobile-menu-icon {
+  display: none;
+}
+
+.mobile-menu {
+  display: none;
+}
+
+body{
+	font-size: 14px;
+  background-color: rgba(0,0,0,0.1);
+}
+
+.container-custom{
+	width: 99%;
+	height: 100%;
+	margin: 0 auto;
+  margin-top: 2%;
+  padding: 10px;
+}
+.title-table { 
+  padding: 10px;
+}
+
+.header-table {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.header-table label,
+.header-table input {
+  margin-right: 5px; /* Adiciona margem à direita da label e do input */
+}
+
+.header-table a {
+  margin-left: auto; /* Move o botão para a extremidade direita da div */
+}
+
+.header-table label{
+  color: #fff;
+}
+
+.btn-new-account {
+  font-size: 15px;
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  background-color: rgb(16, 171, 29);
+  width: 100px;
+	height: 40px;
+}
+
+.table {
+  padding: 10px;
+  width: auto; 
+  height:inherit;
+  overflow:auto;
+}
+
+
+section{
+	margin: 2em 0;
+	overflow: hidden;
+}
+
+section h2{
+	font-size: 2em;
+	display: block;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ccccccae;
+	margin-bottom: .5em;
+}
+
+
+thead {
+  background-color: whitesmoke;
+}
+
+tr {
+  border-bottom: 1px solid rgb(238, 235, 235)!important;
+}
+
+tbody tr td {
+  vertical-align: text-top;
+  padding: 7px;
+  max-width: 50px;
+  color: #fff;
+  white-space: nowrap;
+}
+
+thead tr th {
+  padding: 5px;
+  text-align: center;
+  margin-bottom: 50px;
+  background-color: #000000;
+  color: #fff;
+}
+
+tbody tr {
+  margin-bottom: 50px;
+}
+
+thead tr th.acao {
+  width: 100px;
+  text-align: center;
+}
+
+tbody tr td.acao {
+  text-align: center;
+  word-wrap: break-word; 
+}
+
+label{
+	color: #555;
+	display: block;
+	margin-bottom: .2em;
+}
+
+button:active{
+	margin-top:0px;
+	border: 0;
+}
+
+button[disabled=disabled], button:disabled {
+  background-color: gray;
+	border-color: darkgray;
+}
+
+#filter-table{
+	width: 200px;
+	height: 35px;
+	margin-bottom: 10px;
+}
+
+@media screen and (max-width: 730px) {
+    .nav-bar-custom {
+        padding: 1.5rem 4rem;
+    }
+    .nav-item-custom {
+        display: none;
+    }
+    .logout-button {
+        display: none;
+    }
+    .mobile-menu-icon {
+        display: block;
+    }
+    .mobile-menu-icon button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+    .mobile-menu ul {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        padding-bottom: 1rem;
+    }
+    .mobile-menu .nav-item-custom {
+        display: block;
+        padding-top: 1.2rem;
+    }
+    .mobile-menu .logout-button {
+        display: block;
+        padding: 1rem 2rem;
+    }
+    .mobile-menu .logout-button button {
+        width: 100%;
+    }
+    .open {
+        display: block;
+    }
+    .header-table{
+      display: flex;
+      flex-direction: column;
+    }
+    h2{
+      text-align: center;
+    }
+    .btn-primary {
+      font-size: 10px;
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+      color: white;
+      background-color: rgb(57, 57, 226);
+      width: 15vw;
+      height: auto;
+    }
+    .header-table a {
+      margin-left: 0;
+    }
+    .table-custom{
+      padding: 10px;
+      width: auto;
+      height: inherit;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+}
+
+.table-custom {
+  width: 95%;
+  overflow-x: auto;
+  margin-bottom: 30px;
+}
+
+.table-custom table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-custom th,
+.table-custom td {
+  flex-grow: 1;
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.table-custom th {
+  background-color: #000000;
+}
+
+.container-table {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centralize horizontalmente */
+  align-items: center; /* Centralize verticalmente */
+}
+
+.header-table{
+  margin: 20px;
+  width: 80vw;
+  justify-content: space-between;
+}
+
+.container-table {
+  border-radius: 10px;
+  background: #000000;
+}
+
+.container-custom{
+  padding: 0px 100px 0px 100px;
+}
+
+.nav-list-custom > ul{
+  margin: 0;
+  margin-left: 20px;
+}
+
+.table-custom td {
+  word-wrap: break-word;
+}

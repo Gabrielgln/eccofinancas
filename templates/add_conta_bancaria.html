@@ -6,14 +6,32 @@
 {% endblock %}
 <body>
     {% block content %}
+    <style>
+      .title {
+        color: white;
+      }
+      .td{
+        text-align: center;
+      }
+    </style>
 
-    <div class="container-custom">
-        <h1 class="title-form">Criar conta</h1>
+
+    <div class="container-teste d-flex justify-content-center flex-column p-4">
+      <h1 class="title text-center p-2">Criar conta</h1>
         <form class="row g-3" method="POST" action="{% url 'add_conta_bancaria' %}">
           {% csrf_token %}
-          <div class="col-7">
-            <label for="bankInput" class="form-label">Banco</label>
-            <input type="text" id="bankInput" list="banksList" placeholder="Informe o banco" name="fullNameBank">
+          <div class="col-12">
+
+            <div class="form-floating mb-1">
+              <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" id="bankInput" list="banksList" name="fullNameBank">
+              <label for="floatingInput">Banco</label>
+            </div>
+
+            <div class="form-floating mb-1">
+              <input type="number" class="form-control" min="0" step="any" class="form-control" id="saldo" name="saldo" required>
+              <label for="floatingInput">Saldo</label>
+            </div>
+
             <datalist id="banksList">
                 {% for bank in banks %}
                 <option value="{{bank.fullName}}"></option>
@@ -21,15 +39,12 @@
                 
             </datalist>
           </div>    
-          <div class="col-md-7">
-            <label for="saldo" class="form-label">Saldo</label>
-            <input type="number" min="0" step="any" class="form-control" id="saldo" name="saldo" required>
-          </div>
           <div class="col-12">
-            <button type="submit" class="btn-custom">Cadastrar</button>
-            <a class="btn btn-secondary" href="{% url 'conta_bancaria' %}" role="button">Cancelar</a>
+            <button type="submit" class="btn btn-success">Cadastrar</button>
+            <a class="btn btn-danger" href="{% url 'conta_bancaria' %}" role="button">Cancelar</a>
           </div>
         </form>
-      </div>
+    </div>
+
     {% endblock %}
 </body>

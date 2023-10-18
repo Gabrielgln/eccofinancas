@@ -92,6 +92,9 @@ def home(request):
     categorias = Categoria.objects.all()
     return render(request, 'home.html',{'contas':contas, 'categorias':categorias})
 
+def minha_conta(request):
+    return render(request,'minha_conta.html')
+
 def nova_conta(request):
     categorias = Categoria.objects.all()
     if request.method == 'POST':
@@ -162,10 +165,11 @@ def apagar_conta(request, id_conta):
     return redirect('/')
 
 def conta_bancaria(request):
-    banks = getBanks()
+    banksApi = getBanks()
+    banks = Banco_Usuario.objects.all()
     for bank in banks:
         print(bank)
-    return render(request, 'conta_bancaria.html', {'banks':banks})
+    return render(request, 'conta_bancaria.html', {'banks':banks, 'banksApi':banksApi})
 
 def add_conta_bancaria(request):
     #user = request.user
