@@ -30,6 +30,9 @@ class User(AbstractUser):
     
     def verification_token_expiration_date():
         pass
+
+    def getIdByUsername(username):
+        return User.objects.get(username=username).id
     
 class Categoria(models.Model):
     id = models.AutoField(primary_key=True)

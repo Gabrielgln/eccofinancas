@@ -93,8 +93,7 @@ def home(request):
     return render(request, 'home.html',{'contas':contas, 'categorias':categorias})
 
 def minha_conta(request):
-    userLog = request.user
-    user = User.objects.get(username=userLog)
+    user = User.objects.get(username=request.user)
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
@@ -179,20 +178,35 @@ def apagar_conta(request, id_conta):
 def conta_bancaria(request):
     banksApi = getBanks()
     banks = Banco_Usuario.objects.all()
-    for bank in banks:
-        print(bank)
     return render(request, 'conta_bancaria.html', {'banks':banks, 'banksApi':banksApi})
 
 def add_conta_bancaria(request):
-    #user = request.user
-    user = User.objects.get(id=1)
+    idUser = User.getIdByUsername(request.user)
     banks = getBanks()
+    idContaBancaria = request.GET.get('id')
+    contaBancaria = {}
+
+    if idContaBancaria:
+        contaBancariaTemp = Banco_Usuario.objects.get(id=idContaBancaria)
+        contaBancaria['id'] = contaBancariaTemp.id
+        contaBancaria['fullName'] = getBankByCode(contaBancariaTemp.codigo_banco)['fullName']
+        contaBancaria['saldo'] = contaBancariaTemp.saldo
+
     if request.method == 'POST':
+        id = request.POST.get('id')
         codeBank = getCodeBankByFullName(request.POST.get('fullNameBank'))
         saldo = request.POST.get('saldo')
-        banco_usuario = Banco_Usuario(codigo_banco=codeBank,
-                                      id_usuario=user,
-                                      saldo=saldo)
-        banco_usuario.save()
+        if id:
+            banco_usuario = Banco_Usuario.objects.get(id=id)
+            banco_usuario.codigo_banco = codeBank
+            banco_usuario.saldo = saldo
+            banco_usuario.save()
+        else:
+            Banco_Usuario.objects.create(codigo_banco=codeBank, id_usuario_id=idUser, saldo=saldo)
         return redirect('/conta_bancaria')
-    return render(request, 'add_conta_bancaria.html', {'banks':banks})
+    return render(request, 'add_conta_bancaria.html', {'banks':banks, 'contaBancaria':contaBancaria})
+
+def delete_conta_bancaria(request, id_conta_bancaria):
+    banco_usuario = Banco_Usuario.objects.get(id=id_conta_bancaria)
+    banco_usuario.delete()
+    return redirect('/conta_bancaria')

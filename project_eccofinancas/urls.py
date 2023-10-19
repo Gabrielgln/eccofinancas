@@ -13,6 +13,7 @@ urlpatterns = [
     path('conta/editar_conta/<int:id_conta>/',views.editar_conta, name='editar_conta'),
     path('conta/apagar_conta/<int:id_conta>/',views.apagar_conta, name='apagar_conta'),
     path('conta_bancaria/',views.conta_bancaria, name='conta_bancaria'),
-    path('conta_bancaria/add_conta_bancaria',views.add_conta_bancaria, name='add_conta_bancaria'),
+    path('conta_bancaria/add_conta_bancaria/',views.add_conta_bancaria, name='add_conta_bancaria'),
+    path('conta_bancaria/delete_conta_bancaria/<int:id_conta_bancaria>/',views.delete_conta_bancaria, name='delete_conta_bancaria'),
     path('minha_conta/',views.minha_conta,name='minha_conta')
 ]
