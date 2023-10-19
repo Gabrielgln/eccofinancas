@@ -2,10 +2,14 @@
 {% load static %}
 
 {% block title %}
+    {% if contaBancaria.id %}
+    <title>Editar conta bancária</title>
+    {% endif %}
     <title>Adicionar conta bancária</title>
 {% endblock %}
 <body>
     {% block content %}
+    
     <style>
       .title {
         color: white;
@@ -15,36 +19,40 @@
       }
     </style>
 
-
     <div class="container-teste d-flex justify-content-center flex-column p-4">
+      {% if contaBancaria.id %}
+      <h1 class="title text-center p-2">Editar conta</h1>
+      {% else %}
       <h1 class="title text-center p-2">Criar conta</h1>
+      {% endif %}
         <form class="row g-3" method="POST" action="{% url 'add_conta_bancaria' %}">
           {% csrf_token %}
           <div class="col-12">
 
+            <input type="text" class="form-control" name="id" value="{{contaBancaria.id}}" hidden>
+
             <div class="form-floating mb-1">
-              <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" id="bankInput" list="banksList" name="fullNameBank">
+              <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" id="bankInput" list="banksList" name="fullNameBank" value="{{contaBancaria.fullName}}">
               <label for="floatingInput">Banco</label>
             </div>
 
             <div class="form-floating mb-1">
-              <input type="number" class="form-control" min="0" step="any" class="form-control" id="saldo" name="saldo" required>
+              <input type="number" class="form-control" min="0" step="any" class="form-control" id="saldo" name="saldo" required value="{{contaBancaria.saldo}}">
               <label for="floatingInput">Saldo</label>
             </div>
 
             <datalist id="banksList">
                 {% for bank in banks %}
                 <option value="{{bank.fullName}}"></option>
-                {% endfor %}
-                
+                {% endfor %}   
             </datalist>
+
           </div>    
           <div class="col-12">
-            <button type="submit" class="btn btn-success">Cadastrar</button>
+            <button type="submit" class="btn btn-success">Salvar</button>
             <a class="btn btn-danger" href="{% url 'conta_bancaria' %}" role="button">Cancelar</a>
           </div>
         </form>
     </div>
-
     {% endblock %}
 </body>
