@@ -1,6 +1,6 @@
 {% extends "model_page.html" %}
 {% block title %}
-<title>Conta bancária</title>
+<title>Minha conta</title>
 {% endblock %}
 
 <body>
@@ -20,33 +20,34 @@
     </style>
 
     <main>
-        <form action="">
+        <form action="{% url 'minha_conta' %}" method="POST">
+            {% csrf_token %}
             <div class="container-custom d-flex justify-content-center flex-column p-4">
                 <p class="title fs-1 text-center">Minha conta</p>
 
                 <div class="mb-3 m-4">
-                    <label for="exampleFormControlInput1" class="title form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                    <label for="exampleFormControlInput1" class="title form-label">Primeiro nome</label>
+                    <input type="text" name="first_name" class="form-control" id="exampleFormControlInput1" value="{{user.first_name}}" required>
                 </div>
 
                 <div class="mb-3 m-4">
-                    <label for="exampleFormControlInput1" class="title form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                    <label for="exampleFormControlInput1" class="title form-label">Último nome</label>
+                    <input type="text" name="last_name" class="form-control" id="exampleFormControlInput1" value="{{user.last_name}}" required>
                 </div>
 
                 <div class="mb-3 m-4">
-                    <label for="exampleFormControlInput1" class="title form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                    <label for="exampleFormControlInput1" class="title form-label">Email</label>
+                    <input type="email" name="email" class="form-control" id="exampleFormControlInput1" value="{{user.email}}" required>
                 </div>
 
                 <div class="mb-3 m-4">
-                    <label for="exampleFormControlInput1" class="title form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                    <label for="exampleFormControlInput1" class="title form-label">Minha carteira</label>
+                    <input type="number" min="0" step="any" name="carteira" class="form-control" id="exampleFormControlInput1" value="{{user.carteira}}" required>
                 </div>
     
                 <div class="d-flex justify-content-between m-4">
-                    <button type="button" class="btn btn-success">Criar</button>
-                    <button type="button" class="btn btn-danger">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Atualizar</button>
+                    <a class="btn btn-danger" href="{% url 'minha_conta' %}" role="button">Cancelar</a>
                 </div>
             </div>
         </form>
