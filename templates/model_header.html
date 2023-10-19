@@ -1,0 +1,32 @@
+{% load static %}
+<header>
+  <nav class="nav-bar-custom">
+    <div class="logo">
+      <h1>Eccofinanças</h1>
+      <div class="nav-list-custom">
+        <ul>
+          <li class="nav-item-custom"><a href="{% url 'home' %}" class="nav-link-custom">Início</a></li>
+          <li class="nav-item-custom"><a href="{% url 'conta_bancaria' %}" class="nav-link-custom">Contas bancárias</a></li>
+          <li class="nav-item-custom"><a href="{% url 'minha_conta' %}" class="nav-link-custom">Minha conta</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="nav-item-custom nav-link-custom">Saldo: {{user.carteira}}</p>
+    <div class="logout-button">
+      <button><a href="#">Sair</a></button>
+    </div>
+    <div class="mobile-menu-icon">
+      <button onclick="menuShow()"><img class="icon" src="{% static 'img/menu_white_36dp.svg' %}" alt=""></button>
+    </div>
+  </nav>
+  <div class="mobile-menu">
+    <ul>
+      <li class="nav-item-custom"><a href="#" class="nav-link-custom">Início</a></li>
+      <li class="nav-item-custom"><a href="#" class="nav-link-custom">Contas bancárias</a></li>
+      <li class="nav-item-custom"><a href="#" class="nav-link-custom">Sobre</a></li>
+    </ul>
+    <div class="logout-button">
+      <button><a href="#">Sair</a></button>
+    </div>
+  </div>
+</header>

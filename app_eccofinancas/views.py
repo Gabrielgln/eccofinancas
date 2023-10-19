@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from app_eccofinancas.models import *
+from app_eccofinancas.utils import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.utils import timezone
@@ -91,11 +92,34 @@ def home(request):
     categorias = Categoria.objects.all()
     return render(request, 'home.html',{'contas':contas, 'categorias':categorias})
 
+def minha_conta(request):
+    userLog = request.user
+    user = User.objects.get(username=userLog)
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        carteira = request.POST.get('carteira')
+        user.first_name = first_name
+        user.last_name = last_name
+        user.email = email
+        user.carteira = carteira
+        user.save()
+    return render(request,'minha_conta.html',{'user':user})
+
 def nova_conta(request):
     categorias = Categoria.objects.all()
     if request.method == 'POST':
         descricao = request.POST.get('descricao').strip()
         categoria_id = request.POST.get('categoria')
+
+        if categoria_id == '1':
+            conta = Conta(descricao=descricao, 
+                          categoria_id_id=categoria_id,
+                          numero_parcelas=1)
+            conta.save()
+            return redirect('/')
+
         numero_parcelas = int(request.POST.get('numero_parcela'))
         parcelas_pagas = int(request.POST.get('numero_parcela_paga'))
         valor_total = float(request.POST.get('valor_total'))
@@ -142,46 +166,33 @@ def editar_conta(request, id_conta):
     conta = Conta.objects.get(id=id_conta)
     if request.method == 'POST':
         descricao = request.POST.get('descricao').strip()
-        categoria_id = request.POST.get('categoria')
-        numero_parcelas = int(request.POST.get('numero_parcela'))
-        parcelas_pagas = int(request.POST.get('numero_parcela_paga'))
-        valor_total = float(request.POST.get('valor_total'))
-        data_vencimento_inicial = request.POST.get('data_vencimento')
-        data_vencimento_inicial = datetime.strptime(data_vencimento_inicial, '%Y-%m-%d')
-
-        if numero_parcelas < conta.numero_parcelas:
-            Conta.excluir_conta_unitaria(conta_id=id_conta, numero_parcela_atual=numero_parcelas)
-        if numero_parcelas > conta.numero_parcelas:
-            Conta.adicionar_conta_unitaria(conta_id=id_conta, numero_parcela_atual=numero_parcelas)
-
-        if parcelas_pagas > 0:
-            status = Conta.verificar_status(numero_parcelas, parcelas_pagas)
-            conta.descricao = descricao
-            conta.categoria_id_id = categoria_id
-            conta.numero_parcelas = numero_parcelas
-            conta.parcelas_pagas = parcelas_pagas
-            conta.valor_total = valor_total
-            conta.data_vencimento_inicial = data_vencimento_inicial
-            conta.status = status
-
-            conta.save()
-            conta.editar_conta_unitaria(id_conta)
-            return redirect('/')
-        else:
-            conta.descricao = descricao
-            conta.categoria_id_id = categoria_id
-            conta.numero_parcelas = numero_parcelas
-            conta.parcelas_pagas = parcelas_pagas
-            conta.valor_total = valor_total
-            conta.data_vencimento_inicial = data_vencimento_inicial
-            conta.status = False
-
-            conta.save()
-            conta.editar_conta_unitaria(id_conta)
-            return redirect('/')
+        conta.descricao = descricao
+        conta.save()
+        return redirect('/')
     return render(request, 'editar_conta.html', {'categorias':categorias, 'conta':conta})
 
 def apagar_conta(request, id_conta):
     conta = Conta.objects.get(id=id_conta)
     conta.delete()
     return redirect('/')
+
+def conta_bancaria(request):
+    banksApi = getBanks()
+    banks = Banco_Usuario.objects.all()
+    for bank in banks:
+        print(bank)
+    return render(request, 'conta_bancaria.html', {'banks':banks, 'banksApi':banksApi})
+
+def add_conta_bancaria(request):
+    #user = request.user
+    user = User.objects.get(id=1)
+    banks = getBanks()
+    if request.method == 'POST':
+        codeBank = getCodeBankByFullName(request.POST.get('fullNameBank'))
+        saldo = request.POST.get('saldo')
+        banco_usuario = Banco_Usuario(codigo_banco=codeBank,
+                                      id_usuario=user,
+                                      saldo=saldo)
+        banco_usuario.save()
+        return redirect('/conta_bancaria')
+    return render(request, 'add_conta_bancaria.html', {'banks':banks})

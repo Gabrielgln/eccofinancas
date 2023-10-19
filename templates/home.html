@@ -19,12 +19,13 @@
         <h1>Eccofinanças</h1>
         <div class="nav-list-custom">
           <ul>
-            <li class="nav-item-custom"><a href="#" class="nav-link-custom">Início</a></li>
-            <li class="nav-item-custom"><a href="#" class="nav-link-custom">Projetos</a></li>
-            <li class="nav-item-custom"><a href="#" class="nav-link-custom"> Sobre</a></li>
+            <li class="nav-item-custom"><a href="{% url 'home' %}" class="nav-link-custom">Início</a></li>
+            <li class="nav-item-custom"><a href="{% url 'conta_bancaria' %}" class="nav-link-custom">Contas bancárias</a></li>
+            <li class="nav-item-custom"><a href="{% url 'minha_conta' %}" class="nav-link-custom">Minha conta</a></li>
           </ul>
         </div>
       </div>
+      <p class="nav-item-custom nav-link-custom">Saldo: {{user.carteira}}</p>
       <div class="logout-button">
         <button><a href="#">Sair</a></button>
       </div>
@@ -35,7 +36,7 @@
     <div class="mobile-menu">
       <ul>
         <li class="nav-item-custom"><a href="#" class="nav-link-custom">Início</a></li>
-        <li class="nav-item-custom"><a href="#" class="nav-link-custom">Projetos</a></li>
+        <li class="nav-item-custom"><a href="#" class="nav-link-custom">Contas bancárias</a></li>
         <li class="nav-item-custom"><a href="#" class="nav-link-custom">Sobre</a></li>
       </ul>
       <div class="logout-button">
@@ -71,28 +72,40 @@
             <tbody>
               {% for conta in contas %}
               <tr>
+                {% if conta.categoria_id_id == 1 %}
+                <td class="acao">{{conta.descricao}}</td>
+                {% else %}
                 <td class="acao"><a href="{% url 'nova_conta' %}">{{conta.descricao}}</a></td>
+                {% endif %}
+            
                 {% for categoria in categorias %}
                 {% if categoria.id == conta.categoria_id_id %}
                 <td class="acao">{{categoria.descricao}}</td>
                 {% endif %}
                 {% endfor %}
+
                 <td class="acao">{{conta.numero_parcelas}}</td>
                 <td class="acao">{{conta.parcelas_pagas}}</td>
                 <td class="acao">{{conta.valor_total}}</td>
                 <td class="acao">{{conta.data_vencimento_inicial}}</td>
+
                 {% if conta.status == True %}
                 <td class="acao">Finalizado</td>
                 {% else %}
                 <td class="acao">Pendente</td>
                 {% endif %}
+
                 <td class="acao">
                   <div class="dropdown">
                     <button class="sobrepor btn btn-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Ações
                     </button>
                     <ul class="dropdown-menu dropdown-menu-dark">
+
+                      {% if conta.categoria_id_id == 1 %}
                       <li><a class="dropdown-item" href="#">Pagar</a></li>
+                      {% endif %}
+                
                       <li><a class="dropdown-item" href="conta/editar_conta/{{conta.id}}">Editar</a></li>
                       <li><a role="button" class="dropdown-item" href="{% url 'apagar_conta' conta.id %}" onclick="return confirm('Deseja realmente apagar a conta {{conta.descricao}}?')">Excluir</a></li>
                     </ul>

@@ -1,3 +1,11 @@
+.container-teste {
+    margin: auto auto;
+    width: 50%;
+    margin-top: 10%;
+    background-color: #000000;
+    border-radius: 10px;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap');
 
 *{
@@ -59,7 +67,6 @@ body {
 .nav-item-custom {
   margin: 0 15px;
 }
-
 
 .nav-link-custom {
   text-decoration: none;
@@ -188,7 +195,7 @@ tbody tr td {
 
 thead tr th {
   padding: 5px;
-  text-align: start;
+  text-align: center;
   margin-bottom: 50px;
   background-color: #000000;
   color: #fff;
