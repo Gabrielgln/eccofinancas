@@ -13,6 +13,7 @@ load_dotenv()
 class User(AbstractUser):
     token_confirmation = models.CharField(max_length=100, null=True, blank=True)
     token_expiration_date = models.DateTimeField(null=True, blank=True)
+    carteira = models.FloatField(null=False, default=0)
 
     def send_email_redefinicao_senha(request, token, email):
         subject = "Redefinir senha"

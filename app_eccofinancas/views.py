@@ -93,7 +93,19 @@ def home(request):
     return render(request, 'home.html',{'contas':contas, 'categorias':categorias})
 
 def minha_conta(request):
-    return render(request,'minha_conta.html')
+    userLog = request.user
+    user = User.objects.get(username=userLog)
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        carteira = request.POST.get('carteira')
+        user.first_name = first_name
+        user.last_name = last_name
+        user.email = email
+        user.carteira = carteira
+        user.save()
+    return render(request,'minha_conta.html',{'user':user})
 
 def nova_conta(request):
     categorias = Categoria.objects.all()
