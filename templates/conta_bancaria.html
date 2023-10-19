@@ -43,9 +43,9 @@
                 Ações
               </button>
               <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="">Editar</a></li>
-                <li><a role="button" class="dropdown-item" href=""
-                    onclick="return confirm('Deseja realmente apagar a conta?')">Excluir</a></li>
+                <li><a class="dropdown-item" href="add_conta_bancaria/?id={{bank.id}}">Editar</a></li>
+                <li><a role="button" class="dropdown-item" href="{% url 'delete_conta_bancaria' bank.id %}"
+                    onclick="return confirm('Deseja realmente excluir essa conta bancária?')">Excluir</a></li>
               </ul>
             </div>
           </td>
