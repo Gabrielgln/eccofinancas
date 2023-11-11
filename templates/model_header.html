@@ -11,7 +11,11 @@
         </ul>
       </div>
     </div>
+    {% if user.carteira == null %}
+    <p class="nav-item-custom nav-link-custom">Saldo: 0</p>
+    {% else %}
     <p class="nav-item-custom nav-link-custom">Saldo: {{user.carteira}}</p>
+    {% endif %}
     <div class="logout-button">
       <button><a href="#">Sair</a></button>
     </div>

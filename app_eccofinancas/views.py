@@ -108,14 +108,20 @@ def minha_conta(request):
 
 def nova_conta(request):
     categorias = Categoria.objects.all()
+    bancosApi = getBanks()
+    bancos = Banco_Usuario.objects.filter(id_usuario=User.getIdByUsername(request.user))
     if request.method == 'POST':
+        debitaCarteira = bool(request.POST.get('debitaCarteira'))
+        print(debitaCarteira)
         descricao = request.POST.get('descricao').strip()
         categoria_id = request.POST.get('categoria')
+        conta_debitar = request.POST.get('conta_debitar')
 
         if categoria_id == '1':
             conta = Conta(descricao=descricao, 
                           categoria_id_id=categoria_id,
-                          numero_parcelas=1)
+                          numero_parcelas=1,
+                          id_usuario_id=User.getIdByUsername(request.user))
             conta.save()
             return redirect('/')
 
@@ -134,7 +140,9 @@ def nova_conta(request):
                 parcelas_pagas=parcelas_pagas, 
                 valor_total=valor_total, 
                 data_vencimento_inicial=data_vencimento_inicial, 
-                status=status)
+                status=status,
+                id_usuario_id=User.getIdByUsername(request.user),
+                banco_id=conta_debitar)
             
             conta.save()
             Conta.criar_conta_unitaria(conta.id,
@@ -149,7 +157,9 @@ def nova_conta(request):
                 categoria_id_id=categoria_id, 
                 numero_parcelas=numero_parcelas, 
                 valor_total=valor_total, 
-                data_vencimento_inicial=data_vencimento_inicial)
+                data_vencimento_inicial=data_vencimento_inicial,
+                id_usuario_id=User.getIdByUsername(request.user),
+                banco_id=conta_debitar)
              
             conta.save()
             Conta.criar_conta_unitaria(conta.id,
@@ -158,7 +168,7 @@ def nova_conta(request):
                                        valor_total,
                                        data_vencimento_inicial)
             return redirect('/')
-    return render(request, 'nova_conta.html', {'categorias':categorias})
+    return render(request, 'nova_conta.html', {'categorias':categorias, 'bancos':bancos, 'bancosApi':bancosApi})
 
 def editar_conta(request, id_conta):
     categorias = Categoria.objects.all()

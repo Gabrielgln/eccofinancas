@@ -13,7 +13,7 @@ load_dotenv()
 class User(AbstractUser):
     token_confirmation = models.CharField(max_length=100, null=True, blank=True)
     token_expiration_date = models.DateTimeField(null=True, blank=True)
-    carteira = models.FloatField(null=False, default=0)
+    carteira = models.FloatField(null=True, blank=True)
 
     def send_email_redefinicao_senha(request, token, email):
         subject = "Redefinir senha"
@@ -38,6 +38,13 @@ class Categoria(models.Model):
     id = models.AutoField(primary_key=True)
     descricao = models.TextField(max_length=255)
 
+class Banco_Usuario(models.Model):
+    id = models.AutoField(primary_key=True)
+    codigo_banco = models.IntegerField(null=False, blank=False)
+    id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    saldo = models.FloatField(null=True, blank=True, default=0)
+    data_update = models.DateField(default=timezone.now)
+
 class Conta(models.Model):
     id = models.AutoField(primary_key=True)
     descricao = models.TextField(max_length=50)
@@ -47,6 +54,8 @@ class Conta(models.Model):
     valor_total = models.FloatField(null=True, blank=True)
     data_vencimento_inicial = models.DateField(null=True, blank=True)
     status = models.BooleanField(null=False, blank=False, default=False)
+    id_usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    banco = models.ForeignKey(Banco_Usuario, on_delete=models.CASCADE, null=True)
 
     def get_data_input_evento(self):
         return self.data_vencimento_inicial.strftime('%Y-%m-%d')
@@ -123,9 +132,4 @@ class Conta_Unitaria(models.Model):
     data_vencimento = models.DateField(null=True, blank=True)
     status = models.BooleanField(null=False, blank=False, default=False)
 
-class Banco_Usuario(models.Model):
-    id = models.AutoField(primary_key=True)
-    codigo_banco = models.IntegerField(null=False, blank=False)
-    id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    saldo = models.FloatField(null=True, blank=True, default=0)
-    data_update = models.DateField(default=timezone.now)
+
