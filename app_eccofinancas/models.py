@@ -34,6 +34,11 @@ class User(AbstractUser):
     def getIdByUsername(username):
         return User.objects.get(username=username).id
     
+    def getSaldoTotal(self):
+        saldoCarteira = self.carteira
+        saldoBanco = Banco_Usuario.getSaldoTotal(self.id)
+        return saldoCarteira + saldoBanco
+    
 class Categoria(models.Model):
     id = models.AutoField(primary_key=True)
     descricao = models.TextField(max_length=255)
@@ -45,6 +50,10 @@ class Banco_Usuario(models.Model):
     saldo = models.FloatField(null=True, blank=True, default=0)
     data_update = models.DateField(default=timezone.now)
 
+    def getSaldoTotal(idUser):
+        saldos = Banco_Usuario.objects.filter(id_usuario=idUser).values_list('saldo', flat=True)
+        return sum(saldos)
+        
 class Conta(models.Model):
     id = models.AutoField(primary_key=True)
     descricao = models.TextField(max_length=50)
@@ -131,5 +140,30 @@ class Conta_Unitaria(models.Model):
     valor_unitario = models.FloatField(null=True, blank=True)
     data_vencimento = models.DateField(null=True, blank=True)
     status = models.BooleanField(null=False, blank=False, default=False)
+
+class ContaReceber(models.Model):
+    id = models.AutoField(primary_key=True)
+    descricao = models.TextField(max_length=50, null=False)
+    valor = models.FloatField(null=False)
+    data_recebimento = models.DateField(null=False)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+    banco = models.ForeignKey(Banco_Usuario, on_delete=models.CASCADE, null=True)
+    credita_carteira = models.BooleanField(default=False)
+
+    def creditaCarteira(self):
+        self.usuario.carteira += self.valor
+        self.usuario.save()
+
+    def creditaBanco(self):
+        self.banco.saldo += self.valor
+        self.banco.save()
+    
+    def debitaCarteira(self):
+        self.usuario.carteira -= self.valor
+        self.usuario.save()
+
+    def debitaBanco(self):
+        self.banco.saldo -= self.valor
+        self.banco.save()
 
 

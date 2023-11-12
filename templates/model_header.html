@@ -6,18 +6,19 @@
       <div class="nav-list-custom">
         <ul>
           <li class="nav-item-custom"><a href="{% url 'home' %}" class="nav-link-custom">Início</a></li>
+          <li class="nav-item-custom"><a href="{% url 'conta_receber' %}" class="nav-link-custom">Contas a receber</a></li>
           <li class="nav-item-custom"><a href="{% url 'conta_bancaria' %}" class="nav-link-custom">Contas bancárias</a></li>
           <li class="nav-item-custom"><a href="{% url 'minha_conta' %}" class="nav-link-custom">Minha conta</a></li>
         </ul>
       </div>
     </div>
-    {% if user.carteira == null %}
+    {% if user.getSaldoTotal == null %}
     <p class="nav-item-custom nav-link-custom">Saldo: 0</p>
     {% else %}
-    <p class="nav-item-custom nav-link-custom">Saldo: {{user.carteira}}</p>
+    <p class="nav-item-custom nav-link-custom">Saldo: {{user.getSaldoTotal}}</p>
     {% endif %}
     <div class="logout-button">
-      <button><a href="#">Sair</a></button>
+      <button><a href="{% url 'logout' %}">Sair</a></button>
     </div>
     <div class="mobile-menu-icon">
       <button onclick="menuShow()"><img class="icon" src="{% static 'img/menu_white_36dp.svg' %}" alt=""></button>
@@ -25,12 +26,18 @@
   </nav>
   <div class="mobile-menu">
     <ul>
-      <li class="nav-item-custom"><a href="#" class="nav-link-custom">Início</a></li>
-      <li class="nav-item-custom"><a href="#" class="nav-link-custom">Contas bancárias</a></li>
-      <li class="nav-item-custom"><a href="#" class="nav-link-custom">Sobre</a></li>
+      <li class="nav-item-custom"><a href="{% url 'home' %}" class="nav-link-custom">Início</a></li>
+          <li class="nav-item-custom"><a href="{% url 'conta_receber' %}" class="nav-link-custom">Contas a receber</a></li>
+          <li class="nav-item-custom"><a href="{% url 'conta_bancaria' %}" class="nav-link-custom">Contas bancárias</a></li>
+          <li class="nav-item-custom"><a href="{% url 'minha_conta' %}" class="nav-link-custom">Minha conta</a></li>
     </ul>
+    {% if user.getSaldoTotal == null %}
+    <p class="nav-item-custom nav-link-custom">Saldo: 0</p>
+    {% else %}
+    <p class="nav-item-custom nav-link-custom">Saldo: {{user.getSaldoTotal}}</p>
+    {% endif %}
     <div class="logout-button">
-      <button><a href="#">Sair</a></button>
+      <button><a href="{% url 'logout' %}">Sair</a></button>
     </div>
   </div>
 </header>

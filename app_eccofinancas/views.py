@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from app_eccofinancas.models import *
 from app_eccofinancas.utils import *
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
 from datetime import datetime
@@ -42,6 +43,10 @@ def conectar(request):
         else: 
             messages.error(request, "Seu usuário ou senha estão incorretos.")
     return render(request,'login.html', {'status':status})
+
+def desconectar(request):
+    logout(request)
+    return redirect('/')
 
 def solicitar_email(request):
     status = request.GET.get('status')
@@ -84,14 +89,13 @@ def redefinir_senha(request, token):
             messages.error(request, "O usuario não existe na base de dados")
     return render(request, 'redefinir_senha.html', {'token':token})
 
-def home(request):
-    usuario = request.user
-    print(usuario)
-    data = {'usuario':usuario}
-    contas = Conta.objects.all()
+@login_required(login_url='/login/')
+def home(request):  
+    contas = Conta.objects.filter(id_usuario=User.getIdByUsername(request.user))
     categorias = Categoria.objects.all()
     return render(request, 'home.html',{'contas':contas, 'categorias':categorias})
 
+@login_required(login_url='/login/')
 def minha_conta(request):
     user = User.objects.get(username=request.user)
     if request.method == 'POST':
@@ -106,6 +110,7 @@ def minha_conta(request):
         user.save()
     return render(request,'minha_conta.html',{'user':user})
 
+@login_required(login_url='/login/')
 def nova_conta(request):
     categorias = Categoria.objects.all()
     bancosApi = getBanks()
@@ -170,6 +175,7 @@ def nova_conta(request):
             return redirect('/')
     return render(request, 'nova_conta.html', {'categorias':categorias, 'bancos':bancos, 'bancosApi':bancosApi})
 
+@login_required(login_url='/login/')
 def editar_conta(request, id_conta):
     categorias = Categoria.objects.all()
     conta = Conta.objects.get(id=id_conta)
@@ -180,16 +186,19 @@ def editar_conta(request, id_conta):
         return redirect('/')
     return render(request, 'editar_conta.html', {'categorias':categorias, 'conta':conta})
 
+@login_required(login_url='/login/')
 def apagar_conta(request, id_conta):
     conta = Conta.objects.get(id=id_conta)
     conta.delete()
     return redirect('/')
 
+@login_required(login_url='/login/')
 def conta_bancaria(request):
     banksApi = getBanks()
     banks = Banco_Usuario.objects.all()
     return render(request, 'conta_bancaria.html', {'banks':banks, 'banksApi':banksApi})
 
+@login_required(login_url='/login/')
 def add_conta_bancaria(request):
     idUser = User.getIdByUsername(request.user)
     banks = getBanks()
@@ -216,7 +225,53 @@ def add_conta_bancaria(request):
         return redirect('/conta_bancaria')
     return render(request, 'add_conta_bancaria.html', {'banks':banks, 'contaBancaria':contaBancaria})
 
+@login_required(login_url='/login/')
 def delete_conta_bancaria(request, id_conta_bancaria):
     banco_usuario = Banco_Usuario.objects.get(id=id_conta_bancaria)
     banco_usuario.delete()
     return redirect('/conta_bancaria')
+
+@login_required(login_url='/login/')
+def conta_receber(request):
+    bancosApi = getBanks()
+    contasRecebidas = ContaReceber.objects.filter(usuario_id=User.getIdByUsername(request.user))
+    return render(request, 'conta_receber.html',{'contasRecebidas':contasRecebidas, 'bancosApi':bancosApi})
+
+@login_required(login_url='/login/')
+def conta_receber_adicionar(request):
+    bancosApi = getBanks()
+    bancos = Banco_Usuario.objects.filter(id_usuario=User.getIdByUsername(request.user))
+    if request.method == 'POST':
+        descricao = request.POST.get('descricao')
+        valor = float(request.POST.get('valor'))
+        dataRecebimento = request.POST.get('data_recebimento')
+        creditaCarteira = bool(request.POST.get('creditaCarteira'))
+        if creditaCarteira:
+            contaReceber = ContaReceber(descricao=descricao,
+                                        valor=valor,
+                                        data_recebimento=dataRecebimento,
+                                        usuario_id=User.getIdByUsername(request.user),
+                                        credita_carteira=creditaCarteira)
+            contaReceber.save()
+            contaReceber.creditaCarteira()
+        else:
+            banco = request.POST.get('banco')
+            contaReceber = ContaReceber(descricao=descricao,
+                                        valor=valor,
+                                        data_recebimento=dataRecebimento,
+                                        usuario_id=User.getIdByUsername(request.user),
+                                        banco_id=banco)
+            contaReceber.save()
+            contaReceber.creditaBanco()
+        return redirect('/conta_receber')
+    return render(request, 'conta_receber_adicionar.html',{'bancosApi':bancosApi, 'bancos':bancos})
+
+@login_required(login_url='/login/')
+def conta_receber_deletar(request, id_conta_receber):
+    contaReceber = ContaReceber.objects.get(id=id_conta_receber)
+    if contaReceber.credita_carteira:
+        contaReceber.debitaCarteira()
+    else:
+        contaReceber.debitaBanco()
+    contaReceber.delete()
+    return redirect('/conta_receber')

@@ -6,6 +6,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('cadastro/', views.cadastro, name='cadastro'),
     path('login/', views.conectar, name='conectar'),
+    path('logout/', views.desconectar, name='logout'),
     path('', views.home, name='home'),
     path('solicitar_email/', views.solicitar_email, name='solicitar_email'),
     path('redefinir_senha/<str:token>/', views.redefinir_senha, name='redefinir_senha'),
@@ -15,5 +16,8 @@ urlpatterns = [
     path('conta_bancaria/',views.conta_bancaria, name='conta_bancaria'),
     path('conta_bancaria/add_conta_bancaria/',views.add_conta_bancaria, name='add_conta_bancaria'),
     path('conta_bancaria/delete_conta_bancaria/<int:id_conta_bancaria>/',views.delete_conta_bancaria, name='delete_conta_bancaria'),
-    path('minha_conta/',views.minha_conta,name='minha_conta')
+    path('minha_conta/',views.minha_conta,name='minha_conta'),
+    path('conta_receber/', views.conta_receber, name='conta_receber'),
+    path('conta_receber/adicionar', views.conta_receber_adicionar, name='conta_receber_adicionar'),
+    path('conta_receber/deletar/<int:id_conta_receber>', views.conta_receber_deletar, name='conta_receber_deletar')
 ]
