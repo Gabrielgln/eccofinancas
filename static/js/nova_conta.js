@@ -18,8 +18,18 @@ categoria.addEventListener('change', function(){
         valor_total.removeAttribute("required");
         data_vencimento.disabled = true;
         data_vencimento.removeAttribute("required");
-        conta_debitar.disabled = true;
-        conta_debitar.removeAttribute("required");
+        //conta_debitar.disabled = true;
+        //conta_debitar.removeAttribute("required");
+    }
+    else if(categoriaOpcao == 2){
+        numero_parcela.disabled = true;
+        numero_parcela.removeAttribute("required");
+        numero_parcela_paga.disabled = true;
+        numero_parcela_paga.removeAttribute("required");
+        valor_total.disabled = false;
+        valor_total.setAttribute("required", "required");
+        data_vencimento.disabled = false;
+        data_vencimento.setAttribute("required", "required");
     }
     else{
         numero_parcela.disabled = false;
@@ -30,8 +40,8 @@ categoria.addEventListener('change', function(){
         valor_total.setAttribute("required", "required");
         data_vencimento.disabled = false;
         data_vencimento.setAttribute("required", "required");
-        conta_debitar.disabled = false;
-        conta_debitar.setAttribute("required", "required");
+        //conta_debitar.disabled = false;
+        //conta_debitar.setAttribute("required", "required");
     };
 })
 

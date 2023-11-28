@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/editar_conta.css' %}">
+  <title>Pagar despesa</title>
+</head>
+
+<body>
+  <header>
+    <nav class="nav-bar-custom">
+      <div class="logo">
+        <h1>Eccofinanças</h1>
+        <div class="nav-list-custom">
+          <ul>
+            <li class="nav-item-custom"><a href="{% url 'home' %}" class="nav-link-custom">Início</a></li>
+            <li class="nav-item-custom"><a href="{% url 'conta_receber' %}" class="nav-link-custom">Contas a receber</a></li>
+            <li class="nav-item-custom"><a href="{% url 'conta_bancaria' %}" class="nav-link-custom">Contas bancárias</a></li>
+            <li class="nav-item-custom"><a href="{% url 'minha_conta' %}" class="nav-link-custom">Minha conta</a></li>
+          </ul>
+        </div>
+      </div>
+      {% if user.getSaldoTotal == null %}
+      <p class="nav-item-custom nav-link-custom">Saldo: 0</p>
+      {% else %}
+      <p class="nav-item-custom nav-link-custom">Saldo: {{user.getSaldoTotal}}</p>
+      {% endif %}
+      <div class="logout-button">
+        <button><a href="{% url 'logout' %}">Sair</a></button>
+      </div>
+      <div class="mobile-menu-icon">
+        <button onclick="menuShow()"><img class="icon" src="{% static 'img/menu_white_36dp.svg' %}" alt=""></button>
+      </div>
+    </nav>
+    <div class="mobile-menu">
+      <ul>
+        <li class="nav-item-custom"><a href="{% url 'home' %}" class="nav-link-custom">Início</a></li>
+        <li class="nav-item-custom"><a href="{% url 'conta_receber' %}" class="nav-link-custom">Contas a receber</a></li>
+            <li class="nav-item-custom"><a href="{% url 'conta_bancaria' %}" class="nav-link-custom">Contas bancárias</a></li>
+            <li class="nav-item-custom"><a href="{% url 'minha_conta' %}" class="nav-link-custom">Minha conta</a></li>
+            {% if user.getSaldoTotal == null %}
+      <p class="nav-item-custom nav-link-custom">Saldo: 0</p>
+      {% else %}
+      <p class="nav-item-custom nav-link-custom">Saldo: {{user.getSaldoTotal}}</p>
+      {% endif %}
+        <div class="logout-button">
+          <button><a href="{% url 'logout' %}">Sair</a></button>
+        </div>
+      </ul>
+    </div>
+    </nav>
+  </header>
+  <main>
+    <div class="container-custom">
+      <h1 class="title-form">Pagar despesa</h1>
+      <form class="row g-3" method="POST" action="{% url 'pagar_conta' response.id %}">
+        
+        {% csrf_token %}
+        <div class="col-12">
+          <label for="descricao" class="form-label">Descrição</label>
+          {% for message in messages %}
+          <div class="alert alert-danger" role="alert">
+            {{message}}
+          </div>
+          {% endfor %}
+          <input type="text" class="form-control" id="descricao" name="descricao" required
+          value="{{response.descricao}}" disabled>
+        </div>
+        <div class="col-12">
+          <label for="categoria" class="form-label">Categoria</label>
+          <select id="categoria" class="form-select" name="categoria" required>
+            <option selected>{{response.categoria}}</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="numero_parcela" class="form-label">Numero de parcelas</label>
+          <input type="number" min="1" max="99" class="form-control" id="numero_parcela" name="numero_parcela" required value="{{response.numero_parcelas}}" disabled>
+        </div>
+        <div class="col-md-6">
+          <label for="numero_parcela_paga" class="form-label">Numero de parcelas pagas</label>
+          <input type="number" min="0" class="form-control" id="numero_parcela_paga" name="numero_parcela_paga" required value="{{response.parcelas_pagas}}" disabled>
+        </div>
+        <div class="col-md-6">
+          <label for="valor_total" class="form-label">Valor total</label>
+          <input type="number" min="1" step="any" class="form-control" id="valor_total" name="valor_total" required value="{{response.valor_total}}">
+        </div>
+        <div class="col-md-6">
+          <label for="data_vencimento" class="form-label">Data de vencimento inicial</label>
+          {% if conta.data_vencimento_inicial == null %}
+          <input type="date" class="form-control" id="data_vencimento" name="data_vencimento" required>
+          {% else %}
+          <input type="date" class="form-control" id="data_vencimento" name="data_vencimento" disabled required  value="{{conta.get_data_input_evento}}">
+          {% endif %}
+          
+        </div>
+        <div class="col-12">
+          <label for="conta_debitar" class="form-label">Conta a debitar</label>
+          <input type="number" name="id_conta" value="{{response.banco_id}}" hidden>
+          <input type="text" class="form-control" id="conta_debitar" name="conta_debitar" required  value="{{response.banco_name}}" disabled>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="{{ response.debita_carteira }}" id="debitaCarteira" name="debitaCarteira" {% if response.debita_carteira %}checked{% endif %}>
+            <label class="form-check-label" for="debitaCarteira">
+        Debitar da carteira
+            </label>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn-custom">Pagar</button>
+          <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </main>
+  <script src="{% static 'js/nova_conta.js' %}"></script>
+  <script>
+    function menuShow() {
+      let menuMobile = document.querySelector('.mobile-menu');
+      if (menuMobile.classList.contains('open')) {
+        menuMobile.classList.remove('open');
+        document.querySelector('.icon').src = "{% static 'img/menu_white_36dp.svg' %}";
+      } else {
+        menuMobile.classList.add('open');
+        document.querySelector('.icon').src = "{% static 'img/close_white_36dp.svg' %}";
+      }
+    }
+    const numero_parcela = document.getElementById("numero_parcela");
+    const numero_parcela_paga = document.getElementById("numero_parcela_paga");
+    numero_parcela.addEventListener("input", function () {
+      numero_parcela_paga.max = numero_parcela.value;
+    });
+  </script>
+</body>
+</html>

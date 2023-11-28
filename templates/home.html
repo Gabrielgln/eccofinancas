@@ -83,10 +83,11 @@
             <tbody>
               {% for conta in contas %}
               <tr>
-                {% if conta.categoria_id_id == 1 %}
-                <td class="acao">{{conta.descricao}}</td>
-                {% else %}
+                {% if conta.categoria_id_id == 3 %}
                 <td class="acao"><a href="{% url 'nova_conta' %}">{{conta.descricao}}</a></td>
+                
+                {% else %}
+                <td class="acao">{{conta.descricao}}</td>
                 {% endif %}
             
                 {% for categoria in categorias %}
@@ -113,8 +114,8 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-dark">
 
-                      {% if conta.categoria_id_id == 1 %}
-                      <li><a class="dropdown-item" href="#">Pagar</a></li>
+                      {% if conta.categoria_id_id == 1 or conta.categoria_id_id == 2 %}
+                      <li><a class="dropdown-item" href="conta/pagar_conta/{{conta.id}}">Pagar</a></li>
                       {% endif %}
                 
                       <li><a class="dropdown-item" href="conta/editar_conta/{{conta.id}}">Editar</a></li>

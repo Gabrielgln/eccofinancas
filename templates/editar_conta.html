@@ -67,9 +67,10 @@
       <div class="col-12">
         <label for="categoria" class="form-label">Categoria</label>
         <select id="categoria" class="form-select" name="categoria" required disabled>
-          <option selected value="{{conta.categoria_id_id}}">{{conta.categoria_id_id}}</option>
           {% for categoria in categorias %}
-          <option value="{{categoria.id}}">{{categoria.descricao}}</option>
+          {% if categoria.id == conta.categoria_id_id %}
+          <option selected value="{{categoria.id}}">{{categoria.descricao}}</option>
+          {% endif %}
           {% endfor %}
         </select>
       </div>
@@ -102,11 +103,38 @@
         {% endif %}
       </div>
       <div class="col-12">
+        <label for="conta_debitar" class="form-label">Conta a debitar</label>
+        <select id="conta_debitar" class="form-select" name="conta_debitar" required>
+          {% if conta.banco_id == null %}
+          <option selected></option>
+          {% else %}
+          <option></option>
+          {% endif %}
+          {% for banco in bancos %}
+            {% for bancoApi in bancosApi %}
+              {% if conta.banco_id == banco.id and banco.codigo_banco == bancoApi.code %}
+              <option selected value="{{banco.id}}">{{bancoApi.fullName}}</option>
+              {% endif %}
+              {% if banco.codigo_banco == bancoApi.code %}
+              <option value="{{banco.id}}">{{bancoApi.fullName}}</option>
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="{{ conta.debita_carteira }}" id="debitaCarteira" name="debitaCarteira" {% if conta.debita_carteira %}checked{% endif %}>
+        <label class="form-check-label" for="debitaCarteira">
+    Debitar da carteira
+        </label>
+      </div>
+      <div class="col-12">
         <button type="submit" class="btn-custom">Editar</button>
         <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Cancelar</a>
       </div>
     </form>
   </div>
+  <script src="{% static 'js/nova_conta.js' %}"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
     crossorigin="anonymous"></script>

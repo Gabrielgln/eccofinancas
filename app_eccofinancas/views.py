@@ -116,26 +116,58 @@ def nova_conta(request):
     bancosApi = getBanks()
     bancos = Banco_Usuario.objects.filter(id_usuario=User.getIdByUsername(request.user))
     if request.method == 'POST':
-        debitaCarteira = bool(request.POST.get('debitaCarteira'))
-        print(debitaCarteira)
         descricao = request.POST.get('descricao').strip()
         categoria_id = request.POST.get('categoria')
-        conta_debitar = request.POST.get('conta_debitar')
-
+        debitaCarteira = bool(request.POST.get('debitaCarteira'))
+        print(debitaCarteira)
         if categoria_id == '1':
-            conta = Conta(descricao=descricao, 
+            if(debitaCarteira):
+                print('rola')
+                conta = Conta(descricao=descricao, 
                           categoria_id_id=categoria_id,
                           numero_parcelas=1,
-                          id_usuario_id=User.getIdByUsername(request.user))
-            conta.save()
-            return redirect('/')
-
+                          id_usuario_id=User.getIdByUsername(request.user),
+                          debita_carteira=debitaCarteira)
+                conta.save()
+                return redirect('/')
+            else:
+                conta_debitar = int(request.POST.get('conta_debitar'))
+                conta = Conta(descricao=descricao, 
+                          categoria_id_id=categoria_id,
+                          numero_parcelas=1,
+                          id_usuario_id=User.getIdByUsername(request.user),
+                          banco_id=conta_debitar)     
+                conta.save()
+                return redirect('/')
+        if categoria_id == '2':
+            valor_total = float(request.POST.get('valor_total'))
+            data_vencimento_inicial = request.POST.get('data_vencimento')
+            data_vencimento_inicial = datetime.strptime(data_vencimento_inicial, '%Y-%m-%d')
+            if(debitaCarteira):
+                
+                conta = Conta(descricao=descricao, 
+                            categoria_id_id=categoria_id,
+                            numero_parcelas=1,
+                            valor_total=valor_total,
+                            data_vencimento_inicial=data_vencimento_inicial,
+                            id_usuario_id=User.getIdByUsername(request.user),
+                            debita_carteira=debitaCarteira)
+                conta.save()
+                return redirect('/')
+            else:
+                conta_debitar = int(request.POST.get('conta_debitar'))
+                conta = Conta(descricao=descricao, 
+                            categoria_id_id=categoria_id,
+                            numero_parcelas=1,
+                            valor_total=valor_total,
+                            data_vencimento_inicial=data_vencimento_inicial,
+                            id_usuario_id=User.getIdByUsername(request.user),
+                            banco_id=conta_debitar)
+                conta.save()
+                return redirect('/')      
         numero_parcelas = int(request.POST.get('numero_parcela'))
         parcelas_pagas = int(request.POST.get('numero_parcela_paga'))
-        valor_total = float(request.POST.get('valor_total'))
-        data_vencimento_inicial = request.POST.get('data_vencimento')
-        data_vencimento_inicial = datetime.strptime(data_vencimento_inicial, '%Y-%m-%d')
-
+        
         if parcelas_pagas > 0:
             status = Conta.verificar_status(numero_parcelas, parcelas_pagas)
             conta = Conta(
@@ -179,12 +211,22 @@ def nova_conta(request):
 def editar_conta(request, id_conta):
     categorias = Categoria.objects.all()
     conta = Conta.objects.get(id=id_conta)
+    bancosApi = getBanks()
+    bancos = Banco_Usuario.objects.filter(id_usuario=User.getIdByUsername(request.user))
     if request.method == 'POST':
         descricao = request.POST.get('descricao').strip()
+        debitaCarteira = bool(request.POST.get('debitaCarteira'))
+        conta_debitar = None
+        if(debitaCarteira):
+            conta.debita_carteira = debitaCarteira
+        else:
+            conta.debita_carteira = False
+            conta_debitar = int(request.POST.get('conta_debitar'))
         conta.descricao = descricao
+        conta.banco_id = conta_debitar
         conta.save()
         return redirect('/')
-    return render(request, 'editar_conta.html', {'categorias':categorias, 'conta':conta})
+    return render(request, 'editar_conta.html', {'categorias':categorias, 'conta':conta, 'bancos':bancos, 'bancosApi':bancosApi})
 
 @login_required(login_url='/login/')
 def apagar_conta(request, id_conta):
@@ -193,9 +235,57 @@ def apagar_conta(request, id_conta):
     return redirect('/')
 
 @login_required(login_url='/login/')
+def pagar_conta(request, id_conta):
+    conta = Conta.objects.get(id=id_conta)
+    banco_name = ""
+    banco_usuario = None
+    if(conta.banco_id != None):
+        banco_usuario = Banco_Usuario.objects.get(id=conta.banco_id)
+    if(banco_usuario != None):
+        banco_name = getBankByCode(banco_usuario.codigo_banco)['fullName']
+    response = {
+        'id':conta.id,
+        'descricao': conta.descricao,
+        'numero_parcelas':conta.numero_parcelas,
+        'categoria': Categoria.objects.get(id=conta.categoria_id_id).descricao,
+        'data_vencimento_inicial': conta.data_vencimento_inicial,
+        'parcelas_pagas': conta.parcelas_pagas,
+        'status': conta.status,
+        'valor_total': conta.valor_total,
+        'banco_id': conta.banco_id,
+        'banco_name': banco_name,
+        'debita_carteira': conta.debita_carteira
+    }
+    if request.method == 'POST':
+        valor_total = float(request.POST.get('valor_total'))
+        data_vencimento = request.POST.get('data_vencimento')
+        
+        debitaCarteira = bool(request.POST.get('debitaCarteira'))
+        conta.valor_total = valor_total
+        conta.data_vencimento_inicial = data_vencimento
+        conta.parcelas_pagas =+ 1
+        conta.status = True
+        conta.save()
+
+        if(debitaCarteira):
+            user = User.objects.get(id=User.getIdByUsername(request.user))
+            result = user.debitar(conta.valor_total)
+            if(result.__sizeof__() > 0):
+                messages.error(request, result)
+        else:
+            conta_debitar = int(request.POST.get('id_conta'))
+            if(conta_debitar > 0):
+                banco_usuario = Banco_Usuario.objects.get(id=conta_debitar)
+                banco_usuario.debitar(conta.valor_total)
+        
+        return redirect('/')
+        
+    return render(request, 'conta/pagar_conta.html', {'response':response, 'conta':conta})
+
+@login_required(login_url='/login/')
 def conta_bancaria(request):
     banksApi = getBanks()
-    banks = Banco_Usuario.objects.all()
+    banks = Banco_Usuario.objects.filter(id_usuario=User.getIdByUsername(request.user))
     return render(request, 'conta_bancaria.html', {'banks':banks, 'banksApi':banksApi})
 
 @login_required(login_url='/login/')

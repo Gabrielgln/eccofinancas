@@ -38,6 +38,10 @@ class User(AbstractUser):
         saldoCarteira = self.carteira
         saldoBanco = Banco_Usuario.getSaldoTotal(self.id)
         return saldoCarteira + saldoBanco
+
+    def debitar(self, valor):
+        self.carteira -= valor
+        self.save()
     
 class Categoria(models.Model):
     id = models.AutoField(primary_key=True)
@@ -53,6 +57,13 @@ class Banco_Usuario(models.Model):
     def getSaldoTotal(idUser):
         saldos = Banco_Usuario.objects.filter(id_usuario=idUser).values_list('saldo', flat=True)
         return sum(saldos)
+    
+    def debitar(self, valor):
+        if valor > self.saldo:
+            return "Saldo insuficiente para pagar com a carteira"
+        self.saldo -= valor
+        self.save()
+        return ""
         
 class Conta(models.Model):
     id = models.AutoField(primary_key=True)
@@ -65,6 +76,7 @@ class Conta(models.Model):
     status = models.BooleanField(null=False, blank=False, default=False)
     id_usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     banco = models.ForeignKey(Banco_Usuario, on_delete=models.CASCADE, null=True)
+    debita_carteira = models.BooleanField(default=False)
 
     def get_data_input_evento(self):
         return self.data_vencimento_inicial.strftime('%Y-%m-%d')
