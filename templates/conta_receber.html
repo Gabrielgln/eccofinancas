@@ -1,0 +1,67 @@
+{% extends "model_page.html" %}
+
+{% block title %}
+<title>Contas a receber</title>
+{% endblock %}
+
+
+
+<body>
+    {% block content %}
+    <main>
+        <section class="container-custom">
+          <div class="container-table">
+            <div class="title-table">
+              <h2>Meus recebimentos</h2>
+            </div>
+            <div class="header-table">
+              <label for="filter-table">Filtre:</label>
+              <input type="text" name="filter" id="filter-table" placeholder="Pesquise">
+              <a class="btn btn-outline-success" href="{% url 'conta_receber_adicionar' %}" role="button">Adicionar</a>
+            </div>
+            <div class="table-custom">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="acao">Descrição</th>
+                    <th class="acao">Valor</th>
+                    <th class="acao">Conta</th>
+                    <th class="acao">Data do recebimento</th>
+                    <th class="acao">Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for contaRecebida in contasRecebidas %}
+                  <tr>
+                    <td class="acao">{{contaRecebida.descricao}}</td>
+                    <td class="acao">{{contaRecebida.valor}}</td>
+                    {% for bancoApi in bancosApi %}
+                    {% if contaRecebida.banco and contaRecebida.banco.codigo_banco == bancoApi.code %}
+                    <td class="acao">{{bancoApi.fullName}}</td>
+                    {% endif %}
+                    {% endfor %}
+                    {% if contaRecebida.credita_carteira %}
+                    <td class="acao">Creditado na carteira</td>
+                    {% endif %}
+                    <td class="acao">{{contaRecebida.data_recebimento}}</td>
+                    <td class="acao">
+                      <div class="dropdown">
+                        <button class="sobrepor btn btn-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Ações
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">          
+                          <!-- <li><a class="dropdown-item" href="">Editar</a></li> -->
+                          <li><a role="button" class="dropdown-item" href="{% url 'conta_receber_deletar' contaRecebida.id %}" onclick="return confirm('Deseja realmente apagar esse recebimento?')">Excluir</a></li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+    </main>
+    {% endblock %}
+</body>

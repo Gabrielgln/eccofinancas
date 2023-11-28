@@ -1,0 +1,66 @@
+{% extends "model_page.html" %}
+{% load static %}
+{% block title %}
+<title>Contas a receber</title>
+{% endblock %}
+
+<body>
+    {% block content %}
+    <style>
+        .container-custom {
+
+            background-color: #000000;
+            border-radius: 10px;
+        }
+        .title-form{
+            color: white;
+            text-align: center;
+        }
+    </style>
+    <main>
+        <div class="container-custom">
+          <h1 class="title-form">Cadastrar recebimento</h1>
+          <form class="row g-3" method="POST" action="{% url 'conta_receber_adicionar' %}">
+            {% csrf_token %}
+            <div class="col-12">
+              <label for="descricao" class="form-label">Descrição</label>
+              <input type="text" class="form-control" id="descricao" name="descricao" required>
+            </div>
+            <div class="col-md-6">
+              <label for="valor" class="form-label">Valor</label>
+              <input type="number" min="1" step="any" class="form-control" id="valor" name="valor" required>
+            </div>
+            <div class="col-md-6">
+              <label for="data_recebimento" class="form-label">Data do recebimento</label>
+              <input type="date" class="form-control" id="data_recebimento" name="data_recebimento"  max="{{today}}" required>
+            </div>
+            <div class="col-12">
+              <label for="banco" class="form-label">Banco</label>
+              <select id="banco" class="form-select" name="banco" required>
+                <option selected></option>
+                {% for banco in bancos %}
+                  {% for bancoApi in bancosApi %}
+                    {% if banco.codigo_banco == bancoApi.code %}
+                    <option value="{{banco.id}}">{{bancoApi.fullName}}</option>
+                    {% endif %}
+                  {% endfor %}
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="True" id="creditaCarteira" name="creditaCarteira">
+              <label class="form-check-label" for="creditaCarteira">
+                Receber na carteira
+              </label>
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-success">Cadastrar</button>
+              <a class="btn btn-secondary" href="{% url 'conta_receber' %}" role="button">Cancelar</a>
+            </div>
+          </form>
+        </div>
+    </main>
+    <script src="{% static 'js/conta_receber_adicionar.js' %}"></script>
+    {% endblock %}
+    
+</body>
