@@ -9,7 +9,7 @@
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'css/editar_conta.css' %}">
-  <title>Document</title>
+  <title>Pagar despesa</title>
 </head>
 
 <body>
@@ -58,60 +58,60 @@
   </header>
   <main>
     <div class="container-custom">
-      <h1 class="title-form">Cadastrar despesa</h1>
-      <form class="row g-3" method="POST" action="{% url 'nova_conta' %}">
+      <h1 class="title-form">Pagar despesa</h1>
+      <form class="row g-3" method="POST" action="{% url 'pagar_conta' response.id %}">
+        
         {% csrf_token %}
         <div class="col-12">
           <label for="descricao" class="form-label">Descrição</label>
-          <input type="text" class="form-control" id="descricao" name="descricao" required>
+          {% for message in messages %}
+          <div class="alert alert-danger" role="alert">
+            {{message}}
+          </div>
+          {% endfor %}
+          <input type="text" class="form-control" id="descricao" name="descricao" required
+          value="{{response.descricao}}" disabled>
         </div>
         <div class="col-12">
           <label for="categoria" class="form-label">Categoria</label>
           <select id="categoria" class="form-select" name="categoria" required>
-            <option selected></option>
-            {% for categoria in categorias %}
-            <option value="{{categoria.id}}">{{categoria.descricao}}</option>
-            {% endfor %}
+            <option selected>{{response.categoria}}</option>
           </select>
         </div>
         <div class="col-md-6">
           <label for="numero_parcela" class="form-label">Numero de parcelas</label>
-          <input type="number" min="1" max="99" class="form-control" id="numero_parcela" name="numero_parcela" required>
+          <input type="number" min="1" max="99" class="form-control" id="numero_parcela" name="numero_parcela" required value="{{response.numero_parcelas}}" disabled>
         </div>
         <div class="col-md-6">
           <label for="numero_parcela_paga" class="form-label">Numero de parcelas pagas</label>
-          <input type="number" min="0" class="form-control" id="numero_parcela_paga" name="numero_parcela_paga"
-            required>
+          <input type="number" min="0" class="form-control" id="numero_parcela_paga" name="numero_parcela_paga" required value="{{response.parcelas_pagas}}" disabled>
         </div>
         <div class="col-md-6">
           <label for="valor_total" class="form-label">Valor total</label>
-          <input type="number" min="1" step="any" class="form-control" id="valor_total" name="valor_total" required>
+          <input type="number" min="1" step="any" class="form-control" id="valor_total" name="valor_total" required value="{{response.valor_total}}">
         </div>
         <div class="col-md-6">
           <label for="data_vencimento" class="form-label">Data de vencimento inicial</label>
+          {% if conta.data_vencimento_inicial == null %}
           <input type="date" class="form-control" id="data_vencimento" name="data_vencimento" required>
+          {% else %}
+          <input type="date" class="form-control" id="data_vencimento" name="data_vencimento" disabled required  value="{{conta.get_data_input_evento}}">
+          {% endif %}
+          
         </div>
         <div class="col-12">
           <label for="conta_debitar" class="form-label">Conta a debitar</label>
-          <select id="conta_debitar" class="form-select" name="conta_debitar" required>
-            <option selected></option>
-            {% for banco in bancos %}
-              {% for bancoApi in bancosApi %}
-                {% if banco.codigo_banco == bancoApi.code %}
-                <option value="{{banco.id}}">{{bancoApi.fullName}}</option>
-                {% endif %}
-              {% endfor %}
-            {% endfor %}
-          </select>
+          <input type="number" name="id_conta" value="{{response.banco_id}}" hidden>
+          <input type="text" class="form-control" id="conta_debitar" name="conta_debitar" required  value="{{response.banco_name}}" disabled>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="True" id="debitaCarteira" name="debitaCarteira">
-          <label class="form-check-label" for="debitaCarteira">
-            Debitar da carteira
-          </label>
+            <input class="form-check-input" type="checkbox" value="{{ response.debita_carteira }}" id="debitaCarteira" name="debitaCarteira" {% if response.debita_carteira %}checked{% endif %}>
+            <label class="form-check-label" for="debitaCarteira">
+        Debitar da carteira
+            </label>
         </div>
         <div class="col-12">
-          <button type="submit" class="btn-custom">Cadastrar</button>
+          <button type="submit" class="btn-custom">Pagar</button>
           <a class="btn btn-secondary" href="{% url 'home' %}" role="button">Cancelar</a>
         </div>
       </form>

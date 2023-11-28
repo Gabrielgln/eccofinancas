@@ -39,11 +39,17 @@
                     <label for="exampleFormControlInput1" class="title form-label">Email</label>
                     <input type="email" name="email" class="form-control" id="exampleFormControlInput1" value="{{user.email}}" required>
                 </div>
-
+                {% if user.carteira == null %}
                 <div class="mb-3 m-4">
                     <label for="exampleFormControlInput1" class="title form-label">Minha carteira</label>
-                    <input type="number" min="0" step="any" name="carteira" class="form-control" id="exampleFormControlInput1" value="{{user.carteira}}" required>
+                    <input type="number" min="0" step="any" name="carteira" class="form-control" id="exampleFormControlInput1" value="0" required>
                 </div>
+                {% else %}
+                <div class="mb-3 m-4">
+                    <label for="exampleFormControlInput1" class="title form-label">Minha carteira</label>
+                    <input type="number" min="0" step="any" name="carteira" class="form-control" id="exampleFormControlInput1" value="{{user.carteira}}" required disabled>
+                </div>
+                {% endif %}
     
                 <div class="d-flex justify-content-between m-4">
                     <button type="submit" class="btn btn-success">Atualizar</button>

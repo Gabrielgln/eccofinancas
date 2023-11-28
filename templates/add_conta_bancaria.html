@@ -35,12 +35,17 @@
               <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" id="bankInput" list="banksList" name="fullNameBank" value="{{contaBancaria.fullName}}">
               <label for="floatingInput">Banco</label>
             </div>
-
+            {% if contaBancaria.id %}
+            <div class="form-floating mb-1">
+              <input type="number" class="form-control" min="0" step="any" class="form-control" id="saldo" name="saldo" required value="{{contaBancaria.saldo}}" disabled>
+              <label for="floatingInput">Saldo</label>
+            </div>
+            {% else %}
             <div class="form-floating mb-1">
               <input type="number" class="form-control" min="0" step="any" class="form-control" id="saldo" name="saldo" required value="{{contaBancaria.saldo}}">
               <label for="floatingInput">Saldo</label>
             </div>
-
+            {% endif %}
             <datalist id="banksList">
                 {% for bank in banks %}
                 <option value="{{bank.fullName}}"></option>
